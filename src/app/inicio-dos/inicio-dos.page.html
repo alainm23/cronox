@@ -1,0 +1,394 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button class="btn-nav-left">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="ion-text-center">inicio-uno</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-segment mode="ios">
+    <ion-segment-button value="resumen">
+      <ion-label>Resumen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="portafolio">
+      <ion-label>Portafolio</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dependientes">
+      <ion-label>Dependientes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pagos">
+      <ion-label>Pagos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <!--Resumen-->
+  <div class="div-general-segment div-top-general" style="display: none;">
+    <h6 class="h6-top">Método de pago</h6>
+    <ion-list mode="ios">
+      <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">TOTAL APORTADO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 350</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">VALOR PORTFOLIO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 350</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">TOTAL RESCATES</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 350</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">Asesor</h6>
+            <p class="p-blanco-descripcion">Carlos Romaña Ormachea</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">FECHA EFECTIVIDAD</h6>
+            <p class="p-blanco-descripcion">23/09/2023</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">APORTADO ÚNICO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 350</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">APORTADO REGULAR</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 5.950</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">APORTES PENDIENTES</h6>
+            <p class="p-blanco-descripcion">1</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+    <h6 class="h6-blanco">Distribución de activos</h6>
+    <div class="div-btn">
+      <ion-button class="btn-cuadrados btn-left btn-activo-verde">3M</ion-button>
+      <ion-button class="btn-cuadrados btn-left btn-activo-verde">6M</ion-button>
+      <ion-button class="btn-cuadrados btn-left btn-activo-verde">1A</ion-button>
+      <ion-button class="btn-cuadrados btn-activo-verde">3A</ion-button>
+    </div>
+    <div class="div-estadistica-uno"></div>
+    <ion-button class="btn-cuenta">Ver estado de ceunta</ion-button>
+  </div>
+
+  <!--Portafolio-->
+  <div class="div-general-segment div-top-general" style="display: none;">
+    <ion-list mode="ios">
+      <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">FECHA VALUACIÓN</h6>
+            <p class="p-blanco-descripcion">17/08/2020</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">TOTAL APORTADO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 5.950</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">VALOR PORTAFOLIO REGULAR</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 5.950</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+            <h6 class="h6-list-titulo">VALOR PORTAFOLIO ÚNICO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 0</p>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+      <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+        <ion-row class="row-widht">
+          <ion-col size="6" class="col-padding-left">
+            <h6 class="h6-list-titulo">VALOR PORTAFOLIO</h6>
+            <p class="p-blanco-descripcion"><sup>USD</sup> 6.758</p>
+          </ion-col>
+          <ion-col size="6" class="col-padding-right ion-text-end">
+
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+    <h6 class="h6-blanco h6-bottom">Lista Activos</h6>
+    <ion-card class="card-acordion">
+      <ion-card-header>
+        <h6 class="h6-color-verde">Lorem Ipsum is simply dummy text</h6>
+        <h6 class="h6-color-verde h6-top-verde">ISIN: IM00B3B21R92</h6>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-acordion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-acordion">
+      <ion-card-header>
+        <h6 class="h6-color-verde">Lorem Ipsum is simply dummy text</h6>
+        <h6 class="h6-color-verde h6-top-verde">ISIN: IM00B3B21R92</h6>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-acordion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-acordion">
+      <ion-card-header>
+        <h6 class="h6-color-verde">Lorem Ipsum is simply dummy text</h6>
+        <h6 class="h6-color-verde h6-top-verde">ISIN: IM00B3B21R92</h6>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-acordion"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile,
+        and climb a mountain or spend a week in the woods. Wash your spirit clean.
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!--Pagos-->
+  <div class="div-top-pagos">
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <p class="p-blanco-descripcion">07/08/2020</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR</h6>
+              <p class="p-blanco-descripcion">350</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-icon name="chevron-up-sharp" class="icon-blanco-lsit"></ion-icon>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">CONCEPTO</h6>
+              <p class="p-blanco-descripcion">Aporte regular</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">MONEDA</h6>
+              <p class="p-blanco-descripcion">USD</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+              <p class="p-blanco-descripcion">Cobros RSK - NONE%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">ESTADO</h6>
+              <p class="p-blanco-descripcion">Rechazado</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <p class="p-blanco-descripcion">07/08/2020</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR</h6>
+              <p class="p-blanco-descripcion">350</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-lsit"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="display: none;">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">CONCEPTO</h6>
+              <p class="p-blanco-descripcion">Aporte regular</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">MONEDA</h6>
+              <p class="p-blanco-descripcion">USD</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+              <p class="p-blanco-descripcion">Cobros RSK - NONE%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">ESTADO</h6>
+              <p class="p-blanco-descripcion">Rechazado</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <p class="p-blanco-descripcion">07/08/2020</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR</h6>
+              <p class="p-blanco-descripcion">350</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-lsit"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="display: none;">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">CONCEPTO</h6>
+              <p class="p-blanco-descripcion">Aporte regular</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">MONEDA</h6>
+              <p class="p-blanco-descripcion">USD</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+              <p class="p-blanco-descripcion">Cobros RSK - NONE%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">ESTADO</h6>
+              <p class="p-blanco-descripcion">Rechazado</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <p class="p-blanco-descripcion">07/08/2020</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR</h6>
+              <p class="p-blanco-descripcion">350</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-lsit"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="display: none;">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">CONCEPTO</h6>
+              <p class="p-blanco-descripcion">Aporte regular</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">MONEDA</h6>
+              <p class="p-blanco-descripcion">USD</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+              <p class="p-blanco-descripcion">Cobros RSK - NONE%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">ESTADO</h6>
+              <p class="p-blanco-descripcion">Rechazado</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="card-list">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <p class="p-blanco-descripcion">07/08/2020</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR</h6>
+              <p class="p-blanco-descripcion">350</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-icon name="chevron-down-sharp" class="icon-blanco-lsit"></ion-icon>
+      </ion-card-header>
+      <ion-card-content style="display: none;">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">CONCEPTO</h6>
+              <p class="p-blanco-descripcion">Aporte regular</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">MONEDA</h6>
+              <p class="p-blanco-descripcion">USD</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+              <p class="p-blanco-descripcion">Cobros RSK - NONE%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">ESTADO</h6>
+              <p class="p-blanco-descripcion">Rechazado</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer mode="ios">
+  <div class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">Cuentas</p>
+  </div>
+  <div class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Noticias</p>
+  </div>
+  <div class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Perfil</p>
+  </div>
+  <div class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Contacto</p>
+  </div>
+</ion-footer>

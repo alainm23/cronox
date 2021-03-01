@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">CONTACTO</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid class="ion-no-padding top-general">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input formControlName="nombre" placeholder="Nombre de usuario" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input formControlName="email" placeholder="Carlos@gmail.com" type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input formControlName="asunto" placeholder="Asunto" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-textarea formControlName="mensaje" placeholder="Escriba su Mensaje aquí" rows="3"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button class="btn-editar" (click)="submit ()" [disabled]="form.invalid">ENVIAR</ion-button>
+  </form>
+</ion-content>
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer "></ion-icon>
+    <p class="p-footer ">Cuentas</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Noticias</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Perfil</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">Contacto</p>
+  </div>
+</ion-footer>

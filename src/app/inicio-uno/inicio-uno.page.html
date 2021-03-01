@@ -1,0 +1,97 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-button class="btn-nav-left">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <ion-title class="ion-text-center">inicio-uno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment mode="ios">
+    <ion-segment-button value="resumen">
+      <ion-label>Resumen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="portafolio">
+      <ion-label>Portafolio</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="dependientes">
+      <ion-label>Dependientes</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pagos">
+      <ion-label>Pagos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+  <h6 class="h6-top">Distribución de activos</h6>
+  <div class="div-estadistica-uno"></div>
+  <h6 class="h6-blanco">Método de pago</h6>
+  <ion-list mode="ios">
+    <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+      <ion-row class="row-widht">
+        <ion-col size="8" class="col-padding-left">
+          <h6 class="h6-list-titulo">Frecuencia</h6>
+          <p class="p-blanco-descripcion">Mensual</p>
+        </ion-col>
+        <ion-col size="4" class="col-padding-right ion-text-end">
+          <h6 class="h6-list-titulo">Monto</h6>
+          <p class="p-blanco-descripcion"><sup>USD</sup> 350</p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+      <ion-row class="row-widht">
+        <ion-col size="8" class="col-padding-left">
+          <h6 class="h6-list-titulo">N/A</h6>
+          <p class="p-blanco-descripcion">52xx-xxxx-xxxx-5194</p>
+        </ion-col>
+        <ion-col size="4" class="col-padding-right ion-text-end">
+          <h6 class="h6-list-titulo">Vencimiento</h6>
+          <p class="p-blanco-descripcion">28/02/2022</p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+      <ion-row class="row-widht">
+        <ion-col size="8" class="col-padding-left">
+          <h6 class="h6-list-titulo">Banco</h6>
+          <p class="p-blanco-descripcion">BANCO DE CREDITO DEL PERU</p>
+        </ion-col>
+        <ion-col size="4" class="col-padding-right ion-text-end">
+          <h6 class="h6-list-titulo">Vencimiento</h6>
+          <p class="p-blanco-descripcion">28/02/2022</p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+    <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+      <ion-row class="row-widht">
+        <ion-col size="8" class="col-padding-left">
+          <h6 class="h6-list-titulo">Día de cobro</h6>
+          <p class="p-blanco-descripcion">15</p>
+        </ion-col>
+        <ion-col size="4" class="col-padding-right ion-text-end">
+          <h6 class="h6-list-titulo">Origen fondo</h6>
+          <p class="p-blanco-descripcion">Personal</p>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
+  <ion-button class="btn-cuenta">Ver estado de ceunta</ion-button>
+</ion-content>
+<ion-footer mode="ios">
+  <div class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">Cuentas</p> 
+  </div>
+  <div class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Noticias</p>
+  </div>
+  <div class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Perfil</p>
+  </div>
+  <div class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Contacto</p>
+  </div>
+</ion-footer>

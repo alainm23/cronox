@@ -1,0 +1,368 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="back ()" class="btn-nav-left">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">inicio-uno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="get_data ($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-segment [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="resumen">
+      <ion-label>Resumen</ion-label>
+    </ion-segment-button>
+    <ion-segment-button *ngIf="cuenta?.plan === '0' || cuenta?.plan === '1'" value="portafolio">
+      <ion-label>Portafolio</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="asesor">
+      <ion-label>Asesor</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pagos">
+      <ion-label>Pagos</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ng-container [ngSwitch]="segment_value">
+    <ng-container *ngSwitchCase="'resumen'">
+      <ion-list style="margin-top: 68px;" mode="ios">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">TOTAL APORTADO</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_aportado }}</p>
+            </ion-col>
+
+            <!-- 0= Capital Futuro
+            1= Inversión Plus
+            2= Bond Liquid
+            3= Real Estate -->
+
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">N° DE CUOTAS</h6>
+              <p *ngIf="cuenta?.plan === '1' || cuenta?.plan === '2' || cuenta?.plan === '3'" class="p-blanco-descripcion">
+                {{ cuenta?.valor_aportado / 50 | number:'1.0-0' }}
+              </p>
+              <p *ngIf="cuenta?.plan === '0'" class="p-blanco-descripcion">
+                {{ cuenta?.valor_aportado / 50 | number:'1.0-0' }} / {{ (cuenta?.monto * cuenta?.nro_frecuencia * cuenta?.termino) / 50 | number:'1.0-0' }}
+              </p>
+            </ion-col>
+            <!-- <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR PORTFOLIO</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_portafolio }}</p>
+            </ion-col> -->
+          </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="cuenta?.plan === '1' || cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">VALOR CUOTA {{ get_moment_string (1, 'MMMM') }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.valor_cuota_portafolio_mes }}%</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR CUOTA PROMEDIO {{ get_moment_string (0, 'YYYY') }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.valor_cuota_portafolio_anual }}%</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">Frecuencia de pago</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.frecuencia }}</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Término</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.termino }} años</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="cuenta?.plan === '1'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">Frecuencia de pago</h6>
+              <p class="p-blanco-descripcion">Pago único</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Término</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.termino }} años</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">TOTAL RESCATES</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup> 0</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Asesor</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.nombre_asesor }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="cuenta?.plan === '2' || cuenta?.plan === '3'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">Cupón anual</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.cupon }}</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Años</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.termino }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">FECHA EFECTIVIDAD</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.fecha_efectividad }}</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">VALOR DE CUENTA</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_portafolio }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+
+        <ion-item *ngIf="cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">APORTE REGULAR</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.monto }}</p>
+            </ion-col>
+            <ion-col size="6" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">APORTES PENDIENTES</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.letras_pendientes < 0 ? 0 : cuenta?.letras_pendientes }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+      <h6 class="h6-blanco">Rendimiento</h6>
+      <div class="div-btn">
+        <ion-button (click)="draw_filtro_lineal ('3M')" [class.btn-activo-verde]="filtro_lineal === '3M'" class="btn-cuadrados btn-left">3M</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('6M')" [class.btn-activo-verde]="filtro_lineal === '6M'" class="btn-cuadrados btn-left">6M</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('1A')" [class.btn-activo-verde]="filtro_lineal === '1A'" class="btn-cuadrados btn-left">1A</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('3A')" [class.btn-activo-verde]="filtro_lineal === '3A'" class="btn-cuadrados">3A</ion-button>
+      </div>
+      <div class="div-estadistica-uno" id="chartContainer"></div>
+      <h6 *ngIf="cuenta?.abc === 'Si'" class="h6-top">Distribución de activos</h6>
+      <div *ngIf="cuenta?.abc === 'Si'" class="div-estadistica-uno" id="chartPieContainer"></div>
+      <h6 class="h6-blanco">Método de pago</h6>
+      <ion-list mode="ios">
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="8" class="col-padding-left">
+              <h6 class="h6-list-titulo">Frecuencia</h6>
+              <p *ngIf="cuenta?.plan === '0'" class="p-blanco-descripcion">{{ cuenta?.frecuencia }}</p>
+              <p *ngIf="cuenta?.plan !== '0'" class="p-blanco-descripcion">Pago único</p>
+            </ion-col>
+            <ion-col size="4" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Monto</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.monto }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="8" class="col-padding-left">
+              <h6 class="h6-list-titulo">Tarjeta / N° Cuentas</h6>
+              <p class="p-blanco-descripcion">
+                {{ get_data_alternativa (cuenta, 'numero_cuenta_tb', 'numero_tarjeta_tc') }}
+              </p>
+            </ion-col>
+            <ion-col size="4" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Vencimiento</h6>
+              <p class="p-blanco-descripcion">{{ get_fecha_vencimiento (cuenta) }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="8" class="col-padding-left">
+              <h6 class="h6-list-titulo">Banco</h6>
+              <p class="p-blanco-descripcion">
+                {{ get_data_alternativa (cuenta, 'nombre_banco_tb', 'nombre_banco_tc') }}
+              </p>
+            </ion-col>
+            <ion-col size="4" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">País</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.pais }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="8" class="col-padding-left">
+              <h6 class="h6-list-titulo">Día de cobro</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.dia_cobro === null ? '-' : cuenta?.dia_cobro }}</p>
+            </ion-col>
+            <ion-col size="4" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">Origen fondo</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.origen_riqueza }}</p>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-list>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'asesor'">
+      <div class="div-general-segment div-top-general">
+        <ion-list mode="ios">
+          <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+            <ion-row class="row-widht">
+              <ion-col size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">Asesor</h6>
+                <p class="p-blanco-descripcion">{{ cuenta?.nombre_asesor }}</p>
+              </ion-col>
+              <ion-col (click)="llamar (cuenta?.telefono_asesor)" size="6" class="col-padding-right ion-text-end">
+                <h6 class="h6-list-titulo">Teléfono</h6>
+                <p class="p-blanco-descripcion">{{ cuenta?.telefono_asesor }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+            <ion-row class="row-widht">
+              <ion-col (click)="email (cuenta?.email_asesor)" size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">Correo</h6>
+                <p class="p-blanco-descripcion">{{ cuenta?.email_asesor }}</p>
+              </ion-col>
+              <ion-col size="6" class="col-padding-right ion-text-end">
+
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'portafolio'">
+      <div class="div-general-segment div-top-general">
+        <ion-list mode="ios">
+          <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+            <ion-row class="row-widht">
+              <ion-col size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">Fecha efectividad</h6>
+                <p class="p-blanco-descripcion">{{ cuenta?.fecha_efectividad }}</p>
+              </ion-col>
+              <ion-col size="6" class="col-padding-right ion-text-end">
+                <h6 class="h6-list-titulo">Total aportado</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_aportado }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+          <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+            <ion-row class="row-widht">
+              <ion-col size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">Valor de cuenta</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_portafolio }}</p>
+              </ion-col>
+              <ion-col size="6" class="col-padding-right ion-text-end">
+
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+        <h6 class="h6-blanco h6-bottom">Estrategias</h6>
+        <ion-card (click)="link (cuenta?.inversion_url_1)" *ngIf="cuenta?.inversion_url_1 !== null" class="card-acordion">
+          <ion-card-header>
+            <h6 class="h6-color-verde">{{ cuenta?.inversion_nombre_1 }}</h6>
+            <ion-icon name="chevron-forward-outline" class="icon-blanco-acordion"></ion-icon>
+          </ion-card-header>
+        </ion-card>
+        <ion-card (click)="link (cuenta?.inversion_url_2)" *ngIf="cuenta?.inversion_url_2 !== null" class="card-acordion">
+          <ion-card-header>
+            <h6 class="h6-color-verde">{{ cuenta?.inversion_nombre_2 }}</h6>
+            <ion-icon name="chevron-forward-sharp" class="icon-blanco-acordion"></ion-icon>
+          </ion-card-header>
+        </ion-card>
+        <ion-card (click)="link (cuenta?.inversion_url_3)" *ngIf="cuenta?.inversion_url_3 !== null" class="card-acordion">
+          <ion-card-header>
+            <h6 class="h6-color-verde">{{ cuenta?.inversion_nombre_3 }}</h6>
+            <ion-icon name="chevron-forward-sharp" class="icon-blanco-acordion"></ion-icon>
+          </ion-card-header>
+        </ion-card>
+      </div>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'pagos'">
+      <div class="div-top-pagos">
+        <ion-card class="card-list" *ngFor="let pago of cuenta?.pagos">
+          <ion-card-header>
+            <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+              <ion-row class="row-widht">
+                <ion-col size="6" class="col-padding-left">
+                  <p class="p-blanco-descripcion">{{ pago.fecha }}</p>
+                </ion-col>
+                <ion-col size="6" class="col-padding-right ion-text-end">
+                  <h6 class="h6-list-titulo">VALOR</h6>
+                  <p class="p-blanco-descripcion">{{ pago.monto }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+            <ion-icon (click)="toggle_pago (pago)" name="chevron-up-sharp" class="icon-blanco-lsit"></ion-icon>
+          </ion-card-header>
+          <ion-card-content *ngIf="pago.visible === true">
+            <!-- <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+              <ion-row class="row-widht">
+                <ion-col size="6" class="col-padding-left">
+                  <h6 class="h6-list-titulo">CONCEPTO</h6>
+                  <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
+                </ion-col>
+                <ion-col size="6" class="col-padding-right ion-text-end">
+                  <h6 class="h6-list-titulo">MONEDA</h6>
+                  <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-item> -->
+            <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
+              <ion-row class="row-widht">
+                <ion-col size="6" class="col-padding-left">
+                  <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+                  <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
+                </ion-col>
+                <ion-col size="6" class="col-padding-right ion-text-end">
+                  <h6 class="h6-list-titulo">ESTADO</h6>
+                  <p class="p-blanco-descripcion">{{ pago.estado }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </div>
+    </ng-container>
+  </ng-container>
+  <!-- <ion-button class="btn-cuenta">Ver estado de ceunta</ion-button> -->
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">Cuentas</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Noticias</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Perfil</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Contacto</p>
+  </div>
+</ion-footer>

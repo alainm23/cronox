@@ -1,0 +1,545 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button color="light" (click)="back ()" class="btn-nav-left">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">inicio-uno</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-list class="ion-no-padding" style="background-color: transparent;">
+      <ion-list-header (click)="form_1_visible = !form_1_visible" class="list-header">
+        <ion-label>Datos del participe</ion-label>
+        <ion-button color="light">
+          <ion-icon [ngStyle]="{'transform': form_1_visible ? 'rotate(90deg)' : 'none' }" slot="icon-only" name="chevron-forward-outline" class="transition"></ion-icon>
+        </ion-button>
+      </ion-list-header>
+
+      <ion-grid *ngIf="form_1_visible">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Nombres" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Apellidos" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="Sexo" interface="popover">
+                <ion-select-option value="f">Female</ion-select-option>
+                <ion-select-option value="m">Male</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="correo@gmail.com" type="email"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="DNI/CE" interface="popover">
+                <ion-select-option value="f">DNI</ion-select-option>
+                <ion-select-option value="m">RUC</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="8">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Nro. de documento" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="Idioma" interface="popover">
+                <ion-select-option value="f">DNI</ion-select-option>
+                <ion-select-option value="m">RUC</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-datetime placeholder="Fecha de nacimiento">
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Ocupación" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="País de nacimiento" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Nacionalidad" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4" class="col-padding-right">
+            <ion-item lines="none" class="item-bottom item-label">
+              <ion-input placeholder="+51" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="8">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="986896369" type="tel"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="País de residencia" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Ciudad" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Codigo postal" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Dirección residencial" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>Origen de la riqueza</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-list class="ion-no-padding" style="background-color: transparent;">
+              <ion-item>
+                <ion-label>Ingreso por empleo</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Ahorros</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Rescate o retiros de otras inversiones</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Venta de la propiedad</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Venta de acciones o inversiones</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Herencia</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Venta de la empresa</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Ganancias/dividendos de la empresa</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Acuerdo de divorcio</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Loteria/Juego de azar/regalos</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item>
+                <ion-label>Otro</ion-label>
+                <ion-checkbox slot="start"></ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list-header (click)="form_2_visible = !form_2_visible" class="list-header header-border">
+        <ion-label>Detalles del aporte</ion-label>
+        <ion-button color="light">
+          <ion-icon [ngStyle]="{'transform': form_2_visible ? 'rotate(90deg)' : 'none' }" slot="icon-only" name="chevron-forward-outline" class="transition"></ion-icon>
+        </ion-button>
+      </ion-list-header>
+
+      <ion-grid *ngIf="form_2_visible">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>Aporte regular</h2>
+                <p>Informacion referente al aporte del participe</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="Moneda" interface="popover">
+                <ion-select-option value="f">Dolares ($)</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input placeholder="Aporte (USD)" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="Frecuencia" interface="popover">
+                <ion-select-option value="f">Mensual</ion-select-option>
+                <ion-select-option value="f">Anual</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select placeholder="Termino" interface="popover">
+                <ion-select-option value="f">Mensual</ion-select-option>
+                <ion-select-option value="f">Anual</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-datetime placeholder="Fecha de pago"></ion-datetime>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>Seleccione un metodo de pago</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="metodo_pago" placeholder="Metodo de pago" interface="popover">
+                <ion-select-option value="tarjeta">Tarjeta de credito</ion-select-option>
+                <ion-select-option value="transferencia">Transferencia bancaria</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ng-container *ngIf="form.value.metodo_pago === 'tarjeta'">
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Nombre del banco de la tarjeta de credito" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="País" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Nombre del titular" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Apellido del titular" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Numero de tarjeta" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none" class="item-bottom">
+                <ion-select placeholder="Mes" interface="popover">
+                  <ion-select-option value="f">Enero</ion-select-option>
+                  <ion-select-option value="f">Febrero</ion-select-option>
+                  <ion-select-option value="f">Marzo</ion-select-option>
+                  <ion-select-option value="f">Abril</ion-select-option>
+                  <ion-select-option value="f">Mayp</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none" class="item-bottom">
+                <ion-select placeholder="Año" interface="popover">
+                  <ion-select-option value="f">2016</ion-select-option>
+                  <ion-select-option value="f">2017</ion-select-option>
+                  <ion-select-option value="f">2018</ion-select-option>
+                  <ion-select-option value="f">2019</ion-select-option>
+                  <ion-select-option value="f">2020</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="CVV" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+
+          <ng-container *ngIf="form.value.metodo_pago === 'transferencia'">
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Nombre del banco o institucion financiera" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="CCI / Swift" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Número de la cuenta" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Titular de la cuenta" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input placeholder="Comentarios adicionales" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list-header (click)="form_3_visible = !form_3_visible" class="list-header header-border">
+        <ion-label>Elección del portafolio</ion-label>
+        <ion-button color="light">
+          <ion-icon [ngStyle]="{'transform': form_3_visible ? 'rotate(90deg)' : 'none' }" slot="icon-only" name="chevron-forward-outline" class="transition"></ion-icon>
+        </ion-button>
+      </ion-list-header>
+
+      <ion-grid *ngIf="form_3_visible">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>Eleccion del portafolio para futuros aportes</h2>
+                <p>Información referente al aporte del participe</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-toggle slot="start"></ion-toggle>
+              <ion-label style="color: #fff;" class="ion-text-wrap">DSA</ion-label>
+            </ion-item>
+            <p class="ion-text-wrap" style="color: #fff;">
+              Al activar esta opcion "DSA", los titulares de la cuenta están delegando la desicion al asesor. El mediante actuara en nombre del (de los) titular (es) con el proposito de tomar decisiones de inversion. El asesor sera el actual designado en el momento en que se apruebe el cambio en la inversion.
+            </p>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-toggle slot="start"></ion-toggle>
+              <ion-label style="color: #fff;" class="ion-text-wrap">Estrategia "ABC"</ion-label>
+            </ion-item>
+            <p class="ion-text-wrap" style="color: #fff;">
+              Seleccionando esta estrategi, el 50% incial del periodo de la cuenta se invierte en el portafolio Audaz, el posterior 25% en el portafolio Balanceado y finalmente, el ultimo 25% en el portafolio conservador.
+            </p>
+          </ion-col>
+
+          <ng-container formArrayName="portafolios">
+            <ng-container *ngFor="let _ of portafolios.controls; index as i">
+              <div [formGroupName]="i">
+                <ion-col size="4">
+                  <ion-item formControlName="tipo_portafolio" lines="none" class="item-bottom">
+                    <ion-select placeholder="Tipo" interface="popover">
+                      <ion-select-option value="audaz">Audaz</ion-select-option>
+                      <ion-select-option value="balanceado">Balanceado</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="6">
+                  <ion-item lines="none" class="item-bottom">
+                    <ion-input formControlName="porcentaje" placeholder="Porcentaje regular" type="number">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="2" style="align-self: center;">
+                  <ion-button color="orange" fill="clear">
+                    <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <ion-col size="12">
+            <ion-button (click)="agregar_portafolio ()" fill="clear" color="orange">
+              <ion-icon slot="start" name="add-circle"></ion-icon>
+              Agregar portafolio
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-list-header (click)="form_4_visible = !form_4_visible" class="list-header header-border">
+        <ion-label>Documentos</ion-label>
+        <ion-button color="light">
+          <ion-icon [ngStyle]="{'transform': form_4_visible ? 'rotate(90deg)' : 'none' }" slot="icon-only" name="chevron-forward-outline" class="transition"></ion-icon>
+        </ion-button>
+      </ion-list-header>
+
+      <ion-grid *ngIf="form_4_visible">
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content ion-text-wrap">
+                <h2>Documentos Principales</h2>
+                <p>En esta seccion podra cargar todos los documentos pendientes</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar contrato del participe
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cronograma de inversion
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar documentos de identidad
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar ilustracion firmada
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar autorizacion de cargo
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar prueba de residencia
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar declaracion del participe
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content ion-text-wrap">
+                <h2>Otros documentos</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar comprobante del aporte (Adicional)
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <ion-label style="color: #fff;" class="ion-text-wrap">
+                Cargar documento adicional 1
+              </ion-label>
+              <ion-button color="orange" slot="end">
+                Seleccionar
+              </ion-button>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-list>
+  </form>
+</ion-content>

@@ -1,0 +1,219 @@
+ion-content
+{
+  --background: #222222;
+  --padding-start: 15px;
+  --padding-end: 15px;
+}
+.logo
+{
+  width: 50%;
+  margin-left: 25%;
+  margin-top: 20px;
+}
+.card-nombre
+{
+  background: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid #A1A1A1;
+  border-radius: 0px;
+  margin: 0px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 40px;
+}
+.color-blanco
+{
+  color: #ffffff;
+}
+h1
+{
+  font-size: 17px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  color: #9C9C9C;
+}
+h2
+{
+  font-size: 22px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.card-datos
+{
+  margin: 0px;
+}
+.div-card-datos
+{
+  margin-top: 35px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.card-datos
+{
+  background: transparent;
+  box-shadow:0px 6px 7px 1px #181818;
+  -moz-box-shadow:0px 6px 7px 1px #181818;
+  -webkit-box-shadow:0px 6px 7px 1px #181818;
+  width: 100%;
+  margin-bottom: 20px;
+  .div-linea
+  {
+    width: 100%;
+    height: 10px;
+    background: rgb(110,158,61);
+    background: linear-gradient(83deg, rgba(110,158,61,1) 0%, rgba(9,105,51,1) 65%);
+    border-radius: 4px 4px 0px 0px;
+
+  }
+  ion-card-header
+  {
+    ion-card-title
+    {
+      color: #ffffff;
+      font-size: 22px;
+      position: relative;
+      .icon-bottom
+      {
+        color: #ffffff;
+        position: absolute;
+        right: 0;
+        z-index: 999;
+        top: 2px;
+      }
+    }
+  }
+  ion-card-content
+  {
+    padding-bottom: 18px;
+    .p-datos-size
+    {
+      font-size: 16px;
+    }
+    .div-precio-general
+    {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 15px;
+      .div-precio
+      {
+        width: 33.3%;
+        .top-p-precio
+        {
+          margin: 0px;
+        }
+      }
+      .div-precio:nth-child(1)
+      {
+        border-right: 1px solid #9C9C9C;
+      }
+      .div-precio:nth-child(2)
+      {
+        border-right: 1px solid #9C9C9C;
+      }
+    }
+  }
+  .colo-plomo-datos
+  {
+    color: #9C9C9C;
+  }
+}
+ion-footer
+{
+  background: #292929;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 15px 4px;
+  .div-footer
+  {
+    width: 25%;
+    text-align: center;
+    .p-footer
+    {
+      color: #6A6A6A;
+      margin: 0px;
+    }
+    .p-azul-footer
+    {
+      color: #6a8ca1;
+    }
+    .icon-footer
+    {
+      color: #6A6A6A;
+      font-size: 23px;
+    }
+    .icon-azul-footer
+    {
+      color: #6a8ca1 ;
+    }
+  }
+}
+@media screen and (min-width: 411px)
+{
+  .logo
+  {
+    margin-top: 30px;
+  }
+  ion-content
+  {
+    --padding-start: 25px;
+    --padding-end: 25px;
+  }
+  .card-datos
+  {
+    width: 49%;
+  }
+}
+@media screen and (min-width: 540px)
+{
+  ion-content
+  {
+    --padding-start: 80px;
+    --padding-end: 80px;
+  }
+  ion-footer
+  {
+    padding: 20px 10px;
+  }
+}
+@media screen and (min-width: 640px)
+{
+  ion-content
+  {
+    --padding-start: 20px;
+    --padding-end: 20px;
+  }
+}
+@media screen and (min-width: 768px)
+{
+  ion-content
+  {
+    --padding-start: 50px;
+    --padding-end: 50px;
+  }
+  .logo
+  {
+    width: 30%;
+    margin-left: 35%;
+    margin-top: 40px;
+  }
+  .card-nombre
+  {
+    width: 70%;
+    margin-left: 15%;
+  }
+}
+@media screen and (min-width: 1024px)
+{
+  ion-content
+  {
+    --padding-start: 90px;
+    --padding-end: 90px;
+  }
+  .logo
+  {
+    margin-top: 80px;
+  }
+}

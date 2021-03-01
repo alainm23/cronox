@@ -1,0 +1,107 @@
+ion-toolbar {
+    --background: #292929;
+    position: relative;
+    ion-title
+    {
+        --color: #ffffff;
+        padding: 0px 35px;
+    }
+}
+
+ion-content {
+  --background: #222222;
+  position: relative;
+}
+
+.linea {
+  height: 64px;
+  width: 6px;
+  background-color: #FF6600;
+  border-radius: 8px;
+  position: fixed;
+}
+
+.header-content {
+  margin-left: 24px;
+  h2 {
+    color: #FF6600;
+    font-weight: 600;
+  }
+}
+
+.list-header {
+  background-color: #292929 !important;
+  color: #fff;
+  border-bottom: 1px solid #666666;
+}
+
+.header-border {
+  border-top: 1px solid #666666;
+}
+
+.transition {
+  transition: all 240ms ease-in-out;
+}
+
+ion-segment {
+    position: fixed;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+    border: 0px;
+    border-radius: 0px;
+    border-bottom: 1px solid #848484;
+    height: 45px;
+    ion-segment-button {
+        --background: #222222;
+        --color: #848484;
+        --border-radius: 0px;
+        --color-checked: #ffffff;
+        --background-checked: #739A46;
+        --background-focused: #739A46;
+        --indicator-color: #739A46;
+        --border-width: 0px;
+        margin: 0px;
+        border-right: 0px;
+    }
+}
+ion-item {
+  --padding-start: 0px;
+  --inner-padding-end: 0px;
+  --border-color: transparent;
+  --border-radius: 10px;
+  --border-width: 0px;
+  --background: transparent;
+  margin-bottom: 6px;
+  ion-input {
+    --background: #292929;
+    height: 55px;
+    --placeholder-color: #ffffff;
+    --color: #ffffff;
+    border-radius: 10px;
+    border: 0px;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    box-shadow: rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;
+  }
+  ion-datetime {
+    background-color: #292929;
+    height: 55px;
+    --placeholder-color: #666666;
+    padding-left: 15px;
+    border-radius: 10px;
+    border: 0px;
+    padding-top: 18px;
+    width: 100%;
+  }
+  ion-select {
+    width: 100%;
+    border-radius: 10px;
+    height: 55px;
+    background-color: #292929;
+    --padding-start: 15px;
+    --padding-end: 15px;
+    --placeholder-color: #ffffff;
+    color: #ffffff;
+  }
+}

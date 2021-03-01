@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'PERFIL' | translate }}</ion-title>
+    <ion-icon (click)="salir ()" name="log-in-outline" class="icon-blanco-header"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="form">
+    <ion-grid class="ion-no-padding top-general">
+      <ion-row>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input readonly formControlName="nombres" placeholder="Nombres" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input readonly formControlName="apellidos" placeholder="Apellidos" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4" class="col-padding-right">
+          <ion-item lines="none" class="item-bottom item-label">
+            <ion-input placeholder="+51" formControlName="codigo_pais_telf" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="8">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input formControlName="celular" placeholder="986896369" type="tel"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item (click)="seleccionar_pais ()" lines="none" class="item-bottom">
+            <ion-input formControlName="pais" placeholder="País" type="text"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="item-bottom">
+            <ion-input formControlName="correo" placeholder="correo@gmail.com" type="email"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <ion-button (click)="submit ()" [disabled]="form.invalid" class="btn-editar">Actualizar</ion-button>
+  </form>
+</ion-content>
+<ion-footer (click)="change_lang ()" class="footer-idioma">
+  <p class="p-idioma"><ion-icon name="globe-outline" class="icon-blanco-footer"></ion-icon>Cambiar idioma</p>
+  <ion-icon name="chevron-forward-outline" class="icon-right-footer"></ion-icon>
+</ion-footer>
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer "></ion-icon>
+    <p class="p-footer ">Cuentas</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Noticias</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">Perfil</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">Contacto</p>
+  </div>
+</ion-footer>
