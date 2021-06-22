@@ -1,15 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>inicio-selector</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-button (click)="login_cliente ()">
-    Cliente
-  </ion-button>
+  <img src="assets/logocronoxblanco.png" class="logo">
 
-  <ion-button>
-    Asesor
-  </ion-button>
+  <div style="width: 100%;" class="ion-text-center">
+    <ion-button (click)="presentPopover ($event)" class="idioma">
+      <small>{{ current_lang }}</small>
+      <ion-icon slot="end" name="chevron-down-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <div class="div-card">
+    <div class="div-linea"></div>
+    <ion-card class="card" (click)="login ('user')">
+      <img src="assets/teamwork.svg" class="img-icon-altura">
+      <h6 style="color:#fff;" class="h6-card">{{ 'Soy Cliente' | translate }}</h6>
+    </ion-card>
+
+    <div class="div-linea"></div>
+    <ion-card class="card" (click)="login ('agente')">
+      <img src="assets/businessman.svg" class="img-icon-altura">
+      <h6 style="color:#fff;" class="h6-card">{{ 'Soy Asesor' | translate }}</h6>
+    </ion-card>
+  </div>
 </ion-content>

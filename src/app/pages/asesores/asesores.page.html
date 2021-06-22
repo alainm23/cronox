@@ -1,0 +1,82 @@
+<ng-template #card let-item="item">
+  <ion-card class="card-datos">
+    
+    <div class="div-linea"></div>
+    <ion-item style="--background: transparent;">
+      <ion-label>
+        <h2 style="color: #fff;">{{ item.rol }}</h2>
+        <p>{{ item.nombres }} {{ item.apellidos }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-card>
+
+  <div *ngIf="item.asesores_general_array !== null && item.asesores_general_array !== null">
+    <div style="width: 100%; padding-left: 1rem;" *ngFor="let item of item.asesores_general_array">
+      <div [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{item:item}"></div>  
+    </div>
+  </div>
+
+  <div *ngIf="item.asesores_financiero_array !== null && item.asesores_financiero_array !== null">
+    <div style="width: 100%; padding-left: 1rem;" *ngFor="let item of item.asesores_financiero_array">
+      <div [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{item:item}"></div>  
+    </div>
+  </div>
+
+  <div *ngIf="item.asesores_hijo_array !== null && item.asesores_hijo_array !== null">
+    <div style="width: 100%; padding-left: 1rem;" *ngFor="let item of item.asesores_hijo_array">
+      <div [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{item:item}"></div>  
+    </div>
+  </div>
+</ng-template>
+
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="invitar ()" color="light">
+        <ion-icon slot="icon-only" name="add-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">Asesores</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged ($event.detail.value)" [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="todas">
+      <ion-label>{{ 'Activos' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pendiente">
+      <ion-label>{{ 'Pendientes' | translate }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="div-card-datos">
+    <ion-searchbar class="searchbar" color="dark" mode="ios" (ionChange)="search ($event.detail.value)" placeholder="Buscar..."></ion-searchbar>
+    <div style="width: 100%;" *ngFor="let item of asesores">
+      <div [ngTemplateOutlet]="card" [ngTemplateOutletContext]="{item:item}"></div>
+    </div>  
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Cuentas' | translate }}</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
+  </div>
+</ion-footer>

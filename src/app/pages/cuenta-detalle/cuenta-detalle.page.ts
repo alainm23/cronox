@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, LoadingController } from '@ionic/angular';
+import { NavController, LoadingController, AlertController, ActionSheetController, ModalController } from '@ionic/angular';
 
 // Services
 import { ApiService } from '../../services/api.service';
@@ -9,6 +9,7 @@ import 'anychart';
 import * as moment from 'moment';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { CallNumber } from '@ionic-native/call-number/ngx';
+import { SolictarRetiroPage } from '../../modals/solictar-retiro/solictar-retiro.page';
 
 @Component({
   selector: 'app-cuenta-detalle',
@@ -16,12 +17,14 @@ import { CallNumber } from '@ionic-native/call-number/ngx';
   styleUrls: ['./cuenta-detalle.page.scss'],
 })
 export class CuentaDetallePage implements OnInit {
-  // @ViewChild ('chartContainer', { static: false }) container: ElementRef;
-  // @ViewChild ('chartPieContainer', { static: false }) pieContainer: ElementRef;
-
   chart: anychart.charts.Cartesian = null;
   chart_pie: anychart.charts.Pie = null;
-
+  chart_pie_list: any = {
+    'portafolio_1': null,
+    'portafolio_2': null,
+    'portafolio_3': null
+  };
+  
   cuenta: any = {
     abc: 'Si',
     numero_cuenta_tb: '',
@@ -29,22 +32,35 @@ export class CuentaDetallePage implements OnInit {
     nombre_banco_tb: '',
     nombre_banco_tc: ''
   };
+  plan_text: string = '';
   segment_value: string = 'resumen';
   filtro_lineal: string = '1A';
   grafica_lineal: any [] = [];
   _grafica_lineal: any [] = [];
-  constructor (private api: ApiService,
+  constructor (public api: ApiService,
       private route: ActivatedRoute,
       private navController: NavController,
       private loadingController: LoadingController,
       private callNumber: CallNumber,
-      private socialSharing: SocialSharing) { }
+      private socialSharing: SocialSharing,
+      private alertController: AlertController,
+      private actionSheetController: ActionSheetController,
+      private modalController: ModalController) { }
 
-  ngOnInit () {
+  async ngOnInit () {
     this.get_data (null);
   }
 
-  get_data (event: any) {
+  async get_data (event: any) {
+    let loading: any;
+    if (event === null) {
+      loading = await this.loadingController.create({
+        message: this.api.get_translate ('Procesando...')
+      });
+
+      await loading.present ();
+    }
+
     this.api.get_cuenta_detalle (this.route.snapshot.paramMap.get ('id')).subscribe ((res: any) => {
       console.log (res);
       this.cuenta = res.cuenta;
@@ -52,11 +68,24 @@ export class CuentaDetallePage implements OnInit {
       this.grafica_lineal = res.cuenta_grafica;
       this._grafica_lineal = res.cuenta_grafica;
 
-      this.dibujar_lineal ();
+      setTimeout (() => {
+        this.dibujar_lineal ();
+      }, 250);
+      
       if (event !== null) {
         event.target.complete ();
       } else {
+        loading.dismiss ();
+      }
 
+      if (this.cuenta.plan === '0') {
+        this.plan_text = 'Capital Futuro';
+      } else if (this.cuenta.plan === '1') {
+        this.plan_text = 'Inversión Plus';
+      } else if (this.cuenta.plan === '2') {
+        this.plan_text = 'Bond Liquid';
+      } else if (this.cuenta.plan === '3') {
+        this.plan_text = 'Real Estate';
       }
     }, error => {
       console.log (error);
@@ -108,48 +137,9 @@ export class CuentaDetallePage implements OnInit {
       ]);
     }
 
-    console.log (grafica_value)
-
-    // Dibujar Pastel
-    if (this.chart_pie === null) {
-      this.chart_pie = anychart.pie ();
-      if (this.cuenta.abc === 'Si') {
-        this.chart_pie.palette (["#FF6600"]);
-        this.chart_pie.data ([
-          ["Acciones", 100]
-        ]);
-      } else if (this.cuenta.portafolio_1 !== null && this.cuenta.portafolio_2 !== null && this.cuenta.portafolio_3 !== null) {
-        if (this.cuenta.portafolio_1 === 'Audaz') {
-          this.chart_pie.palette (["#FF6600"]);
-          this.chart_pie.data ([
-              ["Acciones", 100]
-          ]);
-        } else if (this.cuenta.portafolio_1 === 'Balanceado') {
-          this.chart_pie.palette (["#FF6600", "#041a7b", "#0C7B00", "#C6C600"]);
-          this.chart_pie.data ([
-              ["Acciones", 65],
-              ["Ganancia Fija", 20],
-              ["Propiedad/Infraestructura", 10],
-              ["Efectivo", 5],
-          ]);
-        } else if (this.cuenta.portafolio_1 === 'Conservador') {
-          this.chart_pie.palette(["#FF6600", "#041a7b", "#0C7B00", "#C6C600"]);
-          this.chart_pie.data([
-              ["Acciones", 40],
-              ["Ganancia Fija", 40],
-              ["Propiedad/Infraestructura", 10],
-              ["Efectivo", 10],
-          ]);
-        }
-      }
-
-      this.chart_pie.background ().fill ("#222222");
-      this.chart_pie.container (document.getElementById ('chartPieContainer'));
-
-      this.chart_pie.draw ();
-    }
-
-    if (this.chart === null) {
+    if (this.chart !== null) {
+      this.chart.data (grafica_value.reverse ());
+    } else {
       this.chart = anychart.line (grafica_value.reverse ());
       this.chart.credits (false);
 
@@ -162,13 +152,84 @@ export class CuentaDetallePage implements OnInit {
       this.chart.yAxis ().title("USD $");
 
       this.chart.draw ();
+    }
+
+    // Dibujar Pastel
+    if (this.cuenta.abc === 'Si') {
+      if (this.chart_pie === null) {
+        this.chart_pie = anychart.pie ();
+
+        this.chart_pie.palette (["#FF6600"]);
+        this.chart_pie.data ([
+          [this.api.get_translate ('Acciones'), 100]
+        ]);
+
+        this.chart_pie.background ().fill ("#222222");
+        this.chart_pie.container (document.getElementById ("chartPieContainer"));
+        this.chart_pie.draw ();
+      }
     } else {
-      this.chart.data (grafica_value.reverse ());
+      ['portafolio_1', 'portafolio_2', 'portafolio_3'].forEach ((portafolio: string) => {
+        if (this.cuenta [portafolio] !== null && this.chart_pie_list [portafolio] === null) {
+          this.chart_pie_list [portafolio] = anychart.pie ();
+
+          if (this.cuenta [portafolio] === 'Audaz') {
+            this.chart_pie_list [portafolio].palette (["#FF6600"]);
+            this.chart_pie_list [portafolio].data ([
+              [this.api.get_translate ('Acciones'), 100]
+            ]);
+          } else if (this.cuenta [portafolio] === 'Balanceado') {
+            this.chart_pie_list [portafolio].palette (["#FF6600", "#041a7b", "#0C7B00", "#C6C600"]);
+            this.chart_pie_list [portafolio].data ([
+              [this.api.get_translate ('Acciones'), 65],
+              [this.api.get_translate ('Ganancia Fija'), 20],
+              [this.api.get_translate ('Propiedad/Infraestructura'), 10],
+              [this.api.get_translate ('Efectivo'), 5],
+            ]);
+          } else if (this.cuenta [portafolio] === 'Conservador') {
+            this.chart_pie_list [portafolio].palette(["#FF6600", "#041a7b", "#0C7B00", "#C6C600"]);
+            this.chart_pie_list [portafolio].data([
+              [this.api.get_translate ('Acciones'), 40],
+              [this.api.get_translate ('Ganancia Fija'), 40],
+              [this.api.get_translate ('Propiedad/Infraestructura'), 10],
+              [this.api.get_translate ('Efectivo'), 10],
+            ]);
+          } else if (this.cuenta [portafolio] === 'FAANG') {
+            this.chart_pie_list [portafolio].palette (["#FF6600"]);
+            this.chart_pie_list [portafolio].data ([
+                [this.api.get_translate ('Acciones'), 100]
+            ]);
+          } else if (this.cuenta [portafolio] === 'CJ-DAF') {
+            this.chart_pie_list [portafolio].palette([ "#FF6600", "#041a7b", "#0C7B00"]);
+            this.chart_pie_list [portafolio].data([
+              ["Financiamiento de propiedades comerciales", 35],
+              ["Prestamos y acciones", 30],
+              ["Liquidez", 35]
+            ]);
+          } else if (this.cuenta [portafolio] === 'Low VF') {
+            this.chart_pie_list [portafolio].palette([ "#FF6600"]);
+            this.chart_pie_list [portafolio].data([
+              ["Acciones", 100]
+            ]);
+          }
+
+          this.chart_pie_list [portafolio].background ().fill ("#222222");
+          this.chart_pie_list [portafolio].container (document.getElementById (portafolio));
+          this.chart_pie_list [portafolio].draw ();
+        }
+      });
     }
   }
 
+  ver_pdf (pdf: any) {
+    if (pdf === null || pdf === undefined || pdf === '') {
+      return;
+    }
+
+    window.open(encodeURI ('https://portal.cronoxcapital.com.pe/assets-web/cupones-pdf/' + pdf),"_system","location=yes");
+  }
+
   back () {
-    console.log ('back');
     this.navController.back ();
   }
 
@@ -190,8 +251,8 @@ export class CuentaDetallePage implements OnInit {
     this.navController.navigateRoot (page);
   }
 
-  get_moment_string (val: number, format: string) {
-    return moment ().subtract (val, 'month').format (format).toUpperCase ();
+  get_moment_string (nombre_mes_portafolio: any, format: string) {
+    return moment ().set ('month', nombre_mes_portafolio-1).format (format).toUpperCase ();
   }
 
   get_fecha_vencimiento (cuenta: any) {
@@ -214,19 +275,170 @@ export class CuentaDetallePage implements OnInit {
     window.open (url, '_system');
   }
 
-  llamar (value: string) {
+  async llamar (value: string) {
+    const loading = await this.loadingController.create({
+      message: this.api.get_translate ('Procesando...')
+    });
+
+    await loading.present ();
+
     this.callNumber.callNumber (value, true).then (() => {
-
+      loading.dismiss ();
     }, error => {
-
+      loading.dismiss ();
     });
   }
 
-  email (value: string) {
-    this.socialSharing.shareViaEmail ('', '', [value]).then (() => {
-
-    }).catch(() => {
-
+  async email (value: string) {
+    const loading = await this.loadingController.create({
+      message: this.api.get_translate ('Procesando...')
     });
+
+    await loading.present ();
+
+    this.socialSharing.shareViaEmail ('', '', [value]).then (() => {
+      loading.dismiss ();
+    }).catch(() => {
+      loading.dismiss ();
+    });
+  }
+
+  async descargar_estado_cuenta () {
+    const loading = await this.loadingController.create({
+      message: this.api.get_translate ('Procesando...')
+    });
+
+    await loading.present ();
+
+    this.api.pdf_resumen_cuenta (this.route.snapshot.paramMap.get ('id')).subscribe (async (res: any) => {
+      console.log (res);
+      loading.dismiss ();
+      this.actionSheet (res);
+    }, error => {
+      console.log (error);
+      loading.dismiss ();
+    });
+  }
+
+  async actionSheet (res: any) {
+    const actionSheet = await this.actionSheetController.create ({
+      header: this.api.get_translate ('El documento fue generada correctamente'),
+      buttons: [{
+        text: this.api.get_translate ('Compartir'),
+        icon: 'share-social-outline',
+        handler: () => {
+          this.compartir (res.url_pdf);
+        }
+      }, {
+        text: this.api.get_translate ('Visualizar'),
+        icon: 'eye-outline',
+        handler: () => {
+          window.open(encodeURI(res.url_pdf),"_system","location=yes");
+        }
+      }, {
+        text: this.api.get_translate ('Cancelar'),
+        icon: 'close',
+        role: 'cancel'
+      }]
+    });
+
+    await actionSheet.present ();
+  }
+
+  async compartir (url: string) {
+    const loading = await this.loadingController.create({
+      message: this.api.get_translate ('Procesando...')
+    });
+
+    await loading.present ();
+
+    this.socialSharing.share ('', '', url).then (() => {
+      loading.dismiss ();
+    }).catch(() => {
+      loading.dismiss ();
+    });
+  }
+
+  get_monto (cuenta: any) {
+    let monto = parseFloat (cuenta.valor_portafolio);
+    let valor_efectivo = parseFloat (cuenta.valor_efectivo);
+
+    if (valor_efectivo > 0) {
+      monto = cuenta.valor_efectivo;
+    }
+
+    return monto;
+  }
+
+  get_retencion (cuenta: any) {
+    let monto = parseFloat (cuenta.valor_rescate);
+
+    if (cuenta.retencion === '1') {
+      monto = monto - (monto * 0.05);
+    }
+
+    return monto;
+  }
+
+  async solicitar_retiro () {
+    let componentProps: any;
+    if (this.cuenta.plan === '0' || this.cuenta.plan === '1') {
+      componentProps = {
+        valor_rescate: this.cuenta.valor_rescate,
+        nombre_banco_tb: this.cuenta.nombre_banco_tb,
+        cci_swift_tb: this.cuenta.cci_swift_tb,
+        numero_cuenta_tb: this.cuenta.numero_cuenta_tb,
+        titular_cuenta_tb: this.cuenta.titular_cuenta_tb,
+        retencion: this.cuenta.retencion,
+        plan: this.cuenta.plan,
+        id_cuenta: this.route.snapshot.paramMap.get ('id')
+      };
+    } else if (this.cuenta.plan === '2') {
+      componentProps = {
+        cupon_disponible: this.cuenta.cupon_disponible,
+        gastos_del_fondo_reglamento: this.cuenta.gastos_del_fondo_reglamento,
+        monto_retenido: this.cuenta.monto_retenido,
+        disponible_efectivo: this.cuenta.disponible_efectivo,
+        nombre_banco_tb: this.cuenta.nombre_banco_tb,
+        cci_swift_tb: this.cuenta.cci_swift_tb,
+        numero_cuenta_tb: this.cuenta.numero_cuenta_tb,
+        titular_cuenta_tb: this.cuenta.titular_cuenta_tb,
+        plan: this.cuenta.plan,
+        id_cuenta: this.route.snapshot.paramMap.get ('id')
+      };
+    } else if (this.cuenta.plan === '3') {
+      
+    }
+
+    const modal = await this.modalController.create ({
+      component: SolictarRetiroPage,
+      swipeToClose: true,
+      componentProps: componentProps
+    });
+
+    modal.onWillDismiss ().then ((response: any) => {
+      if (response.role === 'update') {
+        this.get_data (null);
+      }
+    });
+
+    return await modal.present ();
+  }
+
+  segment_change (event: any) {
+    console.log (event.detail.value);
+    if (event.detail.value === 'resumen') {
+      setTimeout (() => {
+        this.dibujar_lineal ();
+      }, 250);
+    } else  {
+      this.chart = null;
+      this.chart_pie = null;
+      this.chart_pie_list = {
+        'portafolio_1': null,
+        'portafolio_2': null,
+        'portafolio_3': null
+      };
+    }
   }
 }

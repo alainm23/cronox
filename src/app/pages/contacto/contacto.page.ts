@@ -17,10 +17,10 @@ export class ContactoPage implements OnInit {
 
   ngOnInit () {
     this.form = new FormGroup ({
-      nombre: new FormControl ('', [Validators.required]),
+      nombre: new FormControl (this.api.USER_ACCESS.nombres + ' ' + this.api.USER_ACCESS.apellidos, [Validators.required]),
       asunto: new FormControl ('', [Validators.required]),
       mensaje: new FormControl ('', [Validators.required]),
-      email: new FormControl ('', Validators.required)
+      email: new FormControl (this.api.USER_ACCESS.correo, Validators.required)
     });
   }
 
@@ -30,7 +30,7 @@ export class ContactoPage implements OnInit {
 
   async submit () {
     const loading = await this.loadingController.create({
-      message: 'Procesando...'
+      message: this.api.get_translate ('Procesando...')
     });
 
     await loading.present ();
@@ -46,7 +46,7 @@ export class ContactoPage implements OnInit {
     this.api.send_contacto (request).subscribe ((res: any) => {
       console.log (res);
       loading.dismiss ();
-      this.presentToast ('El mensaje se envio correctamente', 'success');
+      this.presentToast (this.api.get_translate ('El mensaje se envio correctamente'), 'success');
       this.form.reset ();
     }, error => {
       console.log (error);

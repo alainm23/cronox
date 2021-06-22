@@ -1,0 +1,219 @@
+ion-header
+{
+    height: 74px;
+    .menucabezera
+    {
+        --background: #9F2C3F;
+        border-radius: 0px 0px 20px 20px;
+        height: 88px;
+        --border-color: #707070;
+        --border-style: solid;
+        --border-width: 1px;
+        display: flex;
+        align-items: center;
+        --padding-start: 35px;
+        --padding-end: 35px;
+        position: relative;
+        ion-title
+        {
+            color: #ffffff;
+            font-family: AvenirHeavy;
+            font-size: 22px;
+        }
+        .btn-lef-header
+        {
+            --background: transparent;
+            --box-shadow: none;
+            margin: 0px;
+            --padding-start: 0px;
+            --padding-end: 0px;
+        }
+        .btn-menu
+        {
+            margin-right: 0px;
+            position: absolute;
+            right: 18px;
+            top: -2px;
+            ion-menu-button
+            {
+                color: transparent;
+                position: relative;
+                height: 100%;
+                width: 100%;
+            }
+            ion-menu-button::before
+            {
+                content: url('/assets/imgs/grupo-724.png');
+                width: 100%;
+                position: absolute;
+                z-index: 1;
+                right: 0;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+}
+
+.logo
+{
+  width: 80%;
+  margin-top: 50px;
+  margin-bottom: 1rem;
+  margin-left: 10%;
+}
+
+.idioma {
+    margin-bottom: 2rem;
+    --background: tansparent;
+}
+
+.div-linea
+{
+    
+    width: 100%;
+    height: 10px;
+    background: rgb(255,255,255);
+    background: linear-gradient(90deg, white -37%, #ff6600 31%);
+    border-radius: 4px 4px 0px 0px;
+}
+
+.card {
+    border: none;
+    border-radius: 0px;
+    background: transparent;
+    box-shadow:0px 6px 7px 1px #181818;
+    -moz-box-shadow:0px 6px 7px 1px #181818;
+    -webkit-box-shadow:0px 6px 7px 1px #181818;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+ion-content
+{
+    --padding-top: 30px;
+    --background: #222222;
+    position: relative;
+    --padding-start: 55px;
+    --padding-end: 55px;
+    --padding-bottom: 55px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.titulo
+{
+    color: #fff;
+    font-family: AvenirHeavy;
+    margin-bottom: 33px;
+}
+.logo-bottom
+{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+}
+.div-card
+{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+}
+ion-card
+{
+    --background: #ffffff;
+    border: 1px solid #FFC4CE;
+    border-radius: 6px;
+    margin: 0px;
+    height: 182px;
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin-bottom: 6px;
+    box-shadow: 0px 15px 29px #7176A840;
+    width: 100%;
+    .img-icon-altura
+    {
+        width: 64px;
+        height: auto;
+    }
+    .h6-card
+    {
+        margin: 0px;
+        color: #9F2C3F;
+        font-family: AvenirBlack;
+        font-size: 22px;
+        margin-top: 6px;
+    }
+    .p-book
+    {
+        color: #9F2C3F;
+        font-family: AvenirBook;
+        margin: 0px;
+        font-size: 22px;
+    }
+}
+@media (min-width: 411px)
+{
+    ion-content
+    {
+        --padding-start: 65px;
+        --padding-end: 65px;
+    }
+}
+@media (min-width: 480px)
+{
+    ion-content
+    {
+        --padding-start: 80px;
+        --padding-end: 80px;
+    }
+    ion-header
+    {
+        .menucabezera
+        {
+            --padding-start: 45px;
+            --oadding-end: 45px;
+        }
+    }
+}
+@media (min-width: 640px)
+{
+}
+@media (min-width: 768px)
+{
+    ion-header
+    {
+        height: 95px;
+        .menucabezera
+        {
+            --padding-start: 70px;
+            --oadding-end: 70px;
+            height: 105px;
+        }
+    }
+    ion-content
+    {
+        --padding-top: 50px;
+    }
+}
+@media (min-width: 1024px)
+{
+    ion-header
+    {
+        height: 110px;
+        .menucabezera
+        {
+            --padding-start: 120px;
+            --padding-end: 120px;
+            height: 120px;
+        }
+    }
+    ion-content
+    {
+        --padding-start: 180px;
+        --padding-end: 180px;
+        --padding-top: 80px;
+    }
+}

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { NoticiasPageRoutingModule } from './noticias-routing.module';
-
+import { TranslateModule } from '@ngx-translate/core';
 import { NoticiasPage } from './noticias.page';
 
 @NgModule({
@@ -13,7 +13,8 @@ import { NoticiasPage } from './noticias.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    NoticiasPageRoutingModule
+    NoticiasPageRoutingModule,
+    TranslateModule
   ],
   declarations: [NoticiasPage]
 })

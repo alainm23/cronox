@@ -5,7 +5,7 @@
         <ion-icon name="chevron-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-text-center">inicio-uno</ion-title>
+    <ion-title class="ion-text-center">{{ plan_text }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,18 +14,18 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <ion-segment [(ngModel)]="segment_value" mode="ios">
+  <ion-segment (ionChange)="segment_change ($event)" [(ngModel)]="segment_value" mode="ios">
     <ion-segment-button value="resumen">
-      <ion-label>Resumen</ion-label>
+      <ion-label>{{ 'Resumen' | translate }}</ion-label>
     </ion-segment-button>
     <ion-segment-button *ngIf="cuenta?.plan === '0' || cuenta?.plan === '1'" value="portafolio">
-      <ion-label>Portafolio</ion-label>
+      <ion-label>{{ 'Portafolio' | translate }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="asesor">
-      <ion-label>Asesor</ion-label>
+      <ion-label>{{ 'Asesor' | translate }}</ion-label>
     </ion-segment-button>
     <ion-segment-button value="pagos">
-      <ion-label>Pagos</ion-label>
+      <ion-label>{{ 'Aportes' | translate }}</ion-label>
     </ion-segment-button>
   </ion-segment>
 
@@ -35,17 +35,14 @@
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">TOTAL APORTADO</h6>
-              <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_aportado }}</p>
+              <h6 class="h6-list-titulo">{{ 'Aporte/Inversión' | translate }}</h6>
+              <p class="p-blanco-descripcion">
+                <sup>USD</sup> {{ cuenta?.valor_aportado | number:'1.0-0' }} / <sup>USD</sup> {{ cuenta?.monto_invertido | number:'1.0-0' }}
+              </p>
             </ion-col>
 
-            <!-- 0= Capital Futuro
-            1= Inversión Plus
-            2= Bond Liquid
-            3= Real Estate -->
-
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">N° DE CUOTAS</h6>
+              <h6 class="h6-list-titulo">{{ 'Cuotas/Bonos' | translate}}</h6>
               <p *ngIf="cuenta?.plan === '1' || cuenta?.plan === '2' || cuenta?.plan === '3'" class="p-blanco-descripcion">
                 {{ cuenta?.valor_aportado / 50 | number:'1.0-0' }}
               </p>
@@ -53,22 +50,18 @@
                 {{ cuenta?.valor_aportado / 50 | number:'1.0-0' }} / {{ (cuenta?.monto * cuenta?.nro_frecuencia * cuenta?.termino) / 50 | number:'1.0-0' }}
               </p>
             </ion-col>
-            <!-- <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">VALOR PORTFOLIO</h6>
-              <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_portafolio }}</p>
-            </ion-col> -->
           </ion-row>
         </ion-item>
 
         <ion-item *ngIf="cuenta?.plan === '1' || cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">VALOR CUOTA {{ get_moment_string (1, 'MMMM') }}</h6>
+              <h6 class="h6-list-titulo">{{ 'Valor Cuota' | translate }} {{ get_moment_string (cuenta?.nombre_mes_portafolio, 'MMMM') }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.valor_cuota_portafolio_mes }}%</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">VALOR CUOTA PROMEDIO {{ get_moment_string (0, 'YYYY') }}</h6>
-              <p class="p-blanco-descripcion">{{ cuenta?.valor_cuota_portafolio_anual }}%</p>
+              <h6 class="h6-list-titulo">{{ 'Rendimiento acomulado' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.valor_cuota_portafolio_anual | number : '1.2-2' }}%</p>
             </ion-col>
           </ion-row>
         </ion-item>
@@ -76,11 +69,11 @@
         <ion-item *ngIf="cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">Frecuencia de pago</h6>
+              <h6 class="h6-list-titulo">{{ 'Frecuencia de pago' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.frecuencia }}</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Término</h6>
+              <h6 class="h6-list-titulo">{{ 'Término' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.termino }} años</p>
             </ion-col>
           </ion-row>
@@ -89,11 +82,11 @@
         <ion-item *ngIf="cuenta?.plan === '1'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">Frecuencia de pago</h6>
-              <p class="p-blanco-descripcion">Pago único</p>
+              <h6 class="h6-list-titulo">{{ 'Frecuencia de pago' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ 'Pago único' | translate }}</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Término</h6>
+              <h6 class="h6-list-titulo">{{ 'Término' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.termino }} años</p>
             </ion-col>
           </ion-row>
@@ -102,11 +95,11 @@
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">TOTAL RESCATES</h6>
-              <p class="p-blanco-descripcion"><sup>USD</sup> 0</p>
+              <h6 class="h6-list-titulo">{{ 'N°_SERIE' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.numero_serie }}</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Asesor</h6>
+              <h6 class="h6-list-titulo">{{ 'ASESOR' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.nombre_asesor }}</p>
             </ion-col>
           </ion-row>
@@ -115,11 +108,11 @@
         <ion-item *ngIf="cuenta?.plan === '2' || cuenta?.plan === '3'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">Cupón anual</h6>
-              <p class="p-blanco-descripcion">{{ cuenta?.cupon }}</p>
+              <h6 class="h6-list-titulo">{{ 'CUPÓN_ANUAL' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.cupon }}%</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Años</h6>
+              <h6 class="h6-list-titulo">{{ 'AÑOS' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.termino }}</p>
             </ion-col>
           </ion-row>
@@ -127,13 +120,21 @@
 
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
-            <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">FECHA EFECTIVIDAD</h6>
-              <p class="p-blanco-descripcion">{{ cuenta?.fecha_efectividad }}</p>
+            <ion-col *ngIf="cuenta?.plan === '2' || cuenta?.plan === '3'" size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">{{ 'FECHA_DE_CUPÓN' | translate }}</h6>
+              <p *ngIf="cuenta?.cupon_pdf !== null" class="p-blanco-descripcion"><a (click)="ver_pdf (cuenta?.cupon_pdf)">
+                {{ 'Descargar' | translate }}
+              </a></p>
+            </ion-col>
+            <ion-col *ngIf="cuenta?.plan === '0' || cuenta?.plan === '1'" size="6" class="col-padding-left">
+              <h6 class="h6-list-titulo">{{ 'País' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.pais }}</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">VALOR DE CUENTA</h6>
-              <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_portafolio }}</p>
+              <!-- <h6 class="h6-list-titulo">Valor de Cuenta</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_portafolio }}</p> -->
+              <h6 class="h6-list-titulo">{{ 'FECHA_DE_APROBACIÓN' | translate }}</h6>
+              <p class="p-blanco-descripcion">{{ cuenta?.fecha_efectividad }}</p>
             </ion-col>
           </ion-row>
         </ion-item>
@@ -141,79 +142,122 @@
         <ion-item *ngIf="cuenta?.plan === '0'" mode="ios" class="item-list ion-no-padding" lines="none">
           <ion-row class="row-widht">
             <ion-col size="6" class="col-padding-left">
-              <h6 class="h6-list-titulo">APORTE REGULAR</h6>
+              <h6 class="h6-list-titulo">{{ 'Aporte Regular' | translate }}</h6>
               <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.monto }}</p>
             </ion-col>
             <ion-col size="6" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">APORTES PENDIENTES</h6>
+              <h6 class="h6-list-titulo">{{ 'Aportes Pendientes' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.letras_pendientes < 0 ? 0 : cuenta?.letras_pendientes }}</p>
             </ion-col>
           </ion-row>
         </ion-item>
       </ion-list>
-      <h6 class="h6-blanco">Rendimiento</h6>
+      <h6 class="h6-blanco">{{ 'Rendimiento' | translate }}</h6>
       <div class="div-btn">
-        <ion-button (click)="draw_filtro_lineal ('3M')" [class.btn-activo-verde]="filtro_lineal === '3M'" class="btn-cuadrados btn-left">3M</ion-button>
-        <ion-button (click)="draw_filtro_lineal ('6M')" [class.btn-activo-verde]="filtro_lineal === '6M'" class="btn-cuadrados btn-left">6M</ion-button>
-        <ion-button (click)="draw_filtro_lineal ('1A')" [class.btn-activo-verde]="filtro_lineal === '1A'" class="btn-cuadrados btn-left">1A</ion-button>
-        <ion-button (click)="draw_filtro_lineal ('3A')" [class.btn-activo-verde]="filtro_lineal === '3A'" class="btn-cuadrados">3A</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('3M')" [class.btn-activo-verde]="filtro_lineal === '3M'" class="btn-cuadrados btn-left">{{ '3M' | translate }}</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('6M')" [class.btn-activo-verde]="filtro_lineal === '6M'" class="btn-cuadrados btn-left">{{ '6M' | translate }}</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('1A')" [class.btn-activo-verde]="filtro_lineal === '1A'" class="btn-cuadrados btn-left">{{ '1A' | translate }}</ion-button>
+        <ion-button (click)="draw_filtro_lineal ('3A')" [class.btn-activo-verde]="filtro_lineal === '3A'" class="btn-cuadrados">{{ '3A' | translate }}</ion-button>
       </div>
       <div class="div-estadistica-uno" id="chartContainer"></div>
-      <h6 *ngIf="cuenta?.abc === 'Si'" class="h6-top">Distribución de activos</h6>
+
+      <h6 *ngIf="cuenta?.abc === 'Si'" class="h6-top">{{ 'Distribución de activos' | translate }}</h6>
       <div *ngIf="cuenta?.abc === 'Si'" class="div-estadistica-uno" id="chartPieContainer"></div>
-      <h6 class="h6-blanco">Método de pago</h6>
+
+      <ng-container *ngIf="cuenta?.abc !== 'Si'">
+        <ng-container *ngFor="let portafolio of ['portafolio_1', 'portafolio_2', 'portafolio_3']">
+          <ng-container *ngIf="cuenta[portafolio] !== null">
+            <h6 class="h6-top">{{ cuenta[portafolio] }}</h6>
+            <div class="div-estadistica-uno" [id]="portafolio"></div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+
+      <!-- <ng-container *ngIf="cuenta?.valor_rescate > 0">
+        <h6 class="h6-blanco">{{ 'Valores' | translate }}</h6>
+        <ion-list mode="ios">
+          <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+            <ion-row class="row-widht">
+              <ion-col size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">{{ 'Valor de rescate' | translate }}</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_rescate | number : '1.2-2' }}</p>
+              </ion-col>
+              <ion-col *ngIf="cuenta?.retencion === '1'" size="6" class="col-padding-right ion-text-end">
+                <h6 class="h6-list-titulo">{{ 'Reduccion del 5%' | translate }}</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_rescate * -0.05 | number : '1.2-2' }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+
+          <ion-item *ngIf="cuenta?.retencion === '1'" mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
+            <ion-row class="row-widht">
+              <ion-col size="6" class="col-padding-left">
+                <h6 class="h6-list-titulo">{{ 'Valor de rescate total' | translate }}</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.valor_rescate - (cuenta?.valor_rescate * 0.05) | number : '1.2-2' }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ion-list>
+      </ng-container> -->
+
+      <h6 class="h6-blanco">{{ 'Método de pago' | translate }}</h6>
       <ion-list mode="ios">
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="8" class="col-padding-left">
-              <h6 class="h6-list-titulo">Frecuencia</h6>
+              <h6 class="h6-list-titulo">{{ 'Frecuencia' | translate }}</h6>
               <p *ngIf="cuenta?.plan === '0'" class="p-blanco-descripcion">{{ cuenta?.frecuencia }}</p>
               <p *ngIf="cuenta?.plan !== '0'" class="p-blanco-descripcion">Pago único</p>
             </ion-col>
             <ion-col size="4" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Monto</h6>
+              <h6 class="h6-list-titulo">{{ 'Monto' | translate }}</h6>
               <p class="p-blanco-descripcion"><sup>USD</sup> {{ cuenta?.monto }}</p>
             </ion-col>
           </ion-row>
         </ion-item>
+
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="8" class="col-padding-left">
-              <h6 class="h6-list-titulo">Tarjeta / N° Cuentas</h6>
+              <h6 class="h6-list-titulo">{{ 'N° Cuenta/Tarjeta' | translate }}</h6>
               <p class="p-blanco-descripcion">
                 {{ get_data_alternativa (cuenta, 'numero_cuenta_tb', 'numero_tarjeta_tc') }}
               </p>
             </ion-col>
             <ion-col size="4" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">Vencimiento</h6>
+              <h6 class="h6-list-titulo">{{ 'Vencimiento' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ get_fecha_vencimiento (cuenta) }}</p>
             </ion-col>
           </ion-row>
         </ion-item>
+        
         <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
           <ion-row class="row-widht">
             <ion-col size="8" class="col-padding-left">
-              <h6 class="h6-list-titulo">Banco</h6>
+              <h6 class="h6-list-titulo">{{ 'Banco' | translate }}</h6>
               <p class="p-blanco-descripcion">
                 {{ get_data_alternativa (cuenta, 'nombre_banco_tb', 'nombre_banco_tc') }}
               </p>
             </ion-col>
             <ion-col size="4" class="col-padding-right ion-text-end">
-              <h6 class="h6-list-titulo">País</h6>
+              <h6 class="h6-list-titulo">{{ 'País' | translate }}</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.pais }}</p>
             </ion-col>
           </ion-row>
         </ion-item>
+
         <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
           <ion-row class="row-widht">
             <ion-col size="8" class="col-padding-left">
-              <h6 class="h6-list-titulo">Día de cobro</h6>
-              <p class="p-blanco-descripcion">{{ cuenta?.dia_cobro === null ? '-' : cuenta?.dia_cobro }}</p>
+              <h6 class="h6-list-titulo">{{ 'Día de cargo' | translate }}</h6>
+              <p class="p-blanco-descripcion">
+                {{ cuenta?.dia_cobro === null ? '--' : cuenta?.dia_cobro }}
+              </p>
             </ion-col>
-            <ion-col size="4" class="col-padding-right ion-text-end">
+            <!-- <ion-col size="4" class="col-padding-right ion-text-end">
               <h6 class="h6-list-titulo">Origen fondo</h6>
               <p class="p-blanco-descripcion">{{ cuenta?.origen_riqueza }}</p>
-            </ion-col>
+            </ion-col> -->
           </ion-row>
         </ion-item>
       </ion-list>
@@ -225,11 +269,11 @@
           <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
             <ion-row class="row-widht">
               <ion-col size="6" class="col-padding-left">
-                <h6 class="h6-list-titulo">Asesor</h6>
+                <h6 class="h6-list-titulo">{{ 'Asesor' | translate }}</h6>
                 <p class="p-blanco-descripcion">{{ cuenta?.nombre_asesor }}</p>
               </ion-col>
               <ion-col (click)="llamar (cuenta?.telefono_asesor)" size="6" class="col-padding-right ion-text-end">
-                <h6 class="h6-list-titulo">Teléfono</h6>
+                <h6 class="h6-list-titulo">{{ 'Teléfono' | translate }}</h6>
                 <p class="p-blanco-descripcion">{{ cuenta?.telefono_asesor }}</p>
               </ion-col>
             </ion-row>
@@ -237,7 +281,7 @@
           <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
             <ion-row class="row-widht">
               <ion-col (click)="email (cuenta?.email_asesor)" size="6" class="col-padding-left">
-                <h6 class="h6-list-titulo">Correo</h6>
+                <h6 class="h6-list-titulo">{{ 'Correo' | translate }}</h6>
                 <p class="p-blanco-descripcion">{{ cuenta?.email_asesor }}</p>
               </ion-col>
               <ion-col size="6" class="col-padding-right ion-text-end">
@@ -255,11 +299,11 @@
           <ion-item mode="ios" class="item-list ion-no-padding item-boder-bottom" lines="none">
             <ion-row class="row-widht">
               <ion-col size="6" class="col-padding-left">
-                <h6 class="h6-list-titulo">Fecha efectividad</h6>
+                <h6 class="h6-list-titulo">{{ 'Fecha efectividad' | translate }}</h6>
                 <p class="p-blanco-descripcion">{{ cuenta?.fecha_efectividad }}</p>
               </ion-col>
               <ion-col size="6" class="col-padding-right ion-text-end">
-                <h6 class="h6-list-titulo">Total aportado</h6>
+                <h6 class="h6-list-titulo">{{ 'Total aportado' | translate }}</h6>
                 <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_aportado }}</p>
               </ion-col>
             </ion-row>
@@ -267,17 +311,25 @@
           <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
             <ion-row class="row-widht">
               <ion-col size="6" class="col-padding-left">
-                <h6 class="h6-list-titulo">Valor de cuenta</h6>
-                <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_portafolio }}</p>
+                <h6 class="h6-list-titulo">{{ 'Valor efectivo' | translate }}</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_efectivo }}</p>
               </ion-col>
-              <ion-col size="6" class="col-padding-right ion-text-end">
-
+              <ion-col size="6" *ngIf="cuenta?.valor_rescate > 0" class="col-padding-right ion-text-end">
+                <h6 class="h6-list-titulo">{{ 'Valor de retiro' | translate }}</h6>
+                <p class="p-blanco-descripcion"><sup>USD</sup>{{ cuenta?.valor_rescate }}</p>
               </ion-col>
             </ion-row>
           </ion-item>
         </ion-list>
-        <h6 class="h6-blanco h6-bottom">Estrategias</h6>
-        <ion-card (click)="link (cuenta?.inversion_url_1)" *ngIf="cuenta?.inversion_url_1 !== null" class="card-acordion">
+        <h6 class="h6-blanco h6-bottom">{{ 'Estrategias' | translate }}</h6>
+        <ion-card *ngFor="let item of cuenta.factsheets" (click)="link (item.documento)" class="card-acordion">
+          <ion-card-header>
+            <h6 class="h6-color-verde">{{ item.nombre }}</h6>
+            <ion-icon name="chevron-forward-outline" class="icon-blanco-acordion"></ion-icon>
+          </ion-card-header>
+        </ion-card>
+
+        <!-- <ion-card (click)="link (cuenta?.inversion_url_1)" *ngIf="cuenta?.inversion_url_1 !== null" class="card-acordion">
           <ion-card-header>
             <h6 class="h6-color-verde">{{ cuenta?.inversion_nombre_1 }}</h6>
             <ion-icon name="chevron-forward-outline" class="icon-blanco-acordion"></ion-icon>
@@ -294,7 +346,7 @@
             <h6 class="h6-color-verde">{{ cuenta?.inversion_nombre_3 }}</h6>
             <ion-icon name="chevron-forward-sharp" class="icon-blanco-acordion"></ion-icon>
           </ion-card-header>
-        </ion-card>
+        </ion-card> -->
       </div>
     </ng-container>
 
@@ -308,34 +360,22 @@
                   <p class="p-blanco-descripcion">{{ pago.fecha }}</p>
                 </ion-col>
                 <ion-col size="6" class="col-padding-right ion-text-end">
-                  <h6 class="h6-list-titulo">VALOR</h6>
+                  <h6 class="h6-list-titulo">{{ 'Valor' | translate }}</h6>
                   <p class="p-blanco-descripcion">{{ pago.monto }}</p>
                 </ion-col>
               </ion-row>
             </ion-item>
-            <ion-icon (click)="toggle_pago (pago)" name="chevron-up-sharp" class="icon-blanco-lsit"></ion-icon>
+            <ion-icon [ngStyle]="{'transform': pago.visible === true ? 'rotate(90deg)' : 'none' }" (click)="toggle_pago (pago)" name="chevron-forward-sharp" class="icon-blanco-lsit"></ion-icon>
           </ion-card-header>
           <ion-card-content *ngIf="pago.visible === true">
-            <!-- <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
-              <ion-row class="row-widht">
-                <ion-col size="6" class="col-padding-left">
-                  <h6 class="h6-list-titulo">CONCEPTO</h6>
-                  <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
-                </ion-col>
-                <ion-col size="6" class="col-padding-right ion-text-end">
-                  <h6 class="h6-list-titulo">MONEDA</h6>
-                  <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
-                </ion-col>
-              </ion-row>
-            </ion-item> -->
             <ion-item mode="ios" class="item-list ion-no-padding item-boder-top" lines="none">
               <ion-row class="row-widht">
                 <ion-col size="6" class="col-padding-left">
-                  <h6 class="h6-list-titulo">DESCRIPCIÓN</h6>
+                  <h6 class="h6-list-titulo">{{ 'Descripción' | translate }}</h6>
                   <p class="p-blanco-descripcion">{{ pago.comentario }}</p>
                 </ion-col>
                 <ion-col size="6" class="col-padding-right ion-text-end">
-                  <h6 class="h6-list-titulo">ESTADO</h6>
+                  <h6 class="h6-list-titulo">{{ 'Estado' | translate }}</h6>
                   <p class="p-blanco-descripcion">{{ pago.estado }}</p>
                 </ion-col>
               </ion-row>
@@ -345,13 +385,29 @@
       </div>
     </ng-container>
   </ng-container>
-  <!-- <ion-button class="btn-cuenta">Ver estado de ceunta</ion-button> -->
+  <ion-button *ngIf="api.USER_ACCESS.tipo === 'agente'" (click)="descargar_estado_cuenta ()" class="btn-cuenta">
+    {{ 'Generar estado de cuenta' | translate }}
+  </ion-button>
 </ion-content>
+
+<ion-footer (click)="solicitar_retiro ()" *ngIf="(cuenta?.plan === '0' || cuenta?.plan === '1') && cuenta?.valor_rescate > 0" class="footer-idioma">
+  <p class="p-idioma"><ion-icon name="cash-outline" class="icon-blanco-footer"></ion-icon>
+    {{ 'Solicitar retiro' | translate }}
+  </p>
+  <ion-icon name="chevron-forward-outline" class="icon-right-footer"></ion-icon>
+</ion-footer>
+
+<ion-footer (click)="solicitar_retiro ()" *ngIf="cuenta?.plan === '2' && cuenta?.disponible_efectivo > 0" class="footer-idioma">
+  <p class="p-idioma"><ion-icon name="cash-outline" class="icon-blanco-footer"></ion-icon>
+    {{ 'Solicitar retiro' | translate }}
+  </p>
+  <ion-icon name="chevron-forward-outline" class="icon-right-footer"></ion-icon>
+</ion-footer>
 
 <ion-footer mode="ios">
   <div (click)="go_page ('home')" class="div-footer">
-    <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
-    <p class="p-footer p-azul-footer">Cuentas</p>
+    <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
+    <p class="p-footer">Cuentas</p>
   </div>
   <div (click)="go_page ('noticias')" class="div-footer">
     <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>

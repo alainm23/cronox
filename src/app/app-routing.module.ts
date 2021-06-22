@@ -9,32 +9,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'inicio',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./inicio/inicio.module').then( m => m.InicioPageModule)
-  },
-  {
-    path: 'inicio-uno',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./inicio-uno/inicio-uno.module').then( m => m.InicioUnoPageModule)
-  },
-  {
-    path: 'inicio-dos',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./inicio-dos/inicio-dos.module').then( m => m.InicioDosPageModule)
-  },
-  {
     path: 'inicio-selector',
     loadChildren: () => import('./pages/inicio-selector/inicio-selector.module').then( m => m.InicioSelectorPageModule)
   },
   {
-    path: 'login-cliente',
-    loadChildren: () => import('./pages/login-cliente/login-cliente.module').then( m => m.LoginClientePageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'login/:tipo',
+    loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'cuenta-detalle/:id',
@@ -48,6 +28,7 @@ const routes: Routes = [
   },
   {
     path: 'noticias',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/noticias/noticias.module').then( m => m.NoticiasPageModule)
   },
   {
@@ -61,14 +42,71 @@ const routes: Routes = [
     loadChildren: () => import('./modals/paises-seleccionar/paises-seleccionar.module').then( m => m.PaisesSeleccionarPageModule)
   },
   {
-    path: 'home-asesor',
+    path: 'home-agente',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/home-asesor/home-asesor.module').then( m => m.HomeAsesorPageModule)
+    loadChildren: () => import('./pages/home-agente/home-agente.module').then( m => m.HomeAgentePageModule)
   },
   {
-    path: 'tramite-formulario',
+    path: '',
+    redirectTo: 'home',
+    pathMatch: 'full'
+  },
+  {
+    path: 'tramites/:segment_value',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/tramite-formulario/tramite-formulario.module').then( m => m.TramiteFormularioPageModule)
+    loadChildren: () => import('./pages/tramites/tramites.module').then( m => m.TramitesPageModule)
+  },
+  {
+    path: 'tramite-detalle/:id/:tipo/:edit',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/tramite-detalle/tramite-detalle.module').then( m => m.TramiteDetallePageModule)
+  },
+  {
+    path: 'home-agente-popover',
+    loadChildren: () => import('./popovers/home-agente-popover/home-agente-popover.module').then( m => m.HomeAgentePopoverPageModule)
+  },
+  {
+    path: 'menu',
+    loadChildren: () => import('./popovers/menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'asesores/:segment_value',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/asesores/asesores.module').then( m => m.AsesoresPageModule)
+  },
+  {
+    path: 'invitar-agente',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/invitar-agente/invitar-agente.module').then( m => m.InvitarAgentePageModule)
+  },
+  {
+    path: 'ilustrador',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/ilustrador/ilustrador.module').then( m => m.IlustradorPageModule)
+  },
+  {
+    path: 'comisiones',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/comisiones/comisiones.module').then( m => m.ComisionesPageModule)
+  },
+  {
+    path: 'documentos',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/documentos/documentos.module').then( m => m.DocumentosPageModule)
+  },
+  {
+    path: 'noticia-detalle/:id',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/noticia-detalle/noticia-detalle.module').then( m => m.NoticiaDetallePageModule)
+  },
+  {
+    path: 'inversiones-otras',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/inversiones-otras/inversiones-otras.module').then( m => m.InversionesOtrasPageModule)
+  },
+  {
+    path: 'solictar-retiro',
+    loadChildren: () => import('./modals/solictar-retiro/solictar-retiro.module').then( m => m.SolictarRetiroPageModule)
   }
 ];
 

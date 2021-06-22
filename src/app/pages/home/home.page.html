@@ -1,15 +1,9 @@
-<!--W<ion-header>
-  <ion-toolbar>
-    <ion-title>inicio</ion-title>
-  </ion-toolbar>
-</ion-header>-->
-
 <ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="get_data ($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
-  <img src="assets/img/logo.jpg" class="logo">
+  <img src="assets/logocronoxblanco.png" class="logo">
   <ion-card class="card-nombre">
     <h1 class="ion-text-center">{{ 'Bienvenido' | translate }}</h1>
     <h2 class="ion-text-center color-blanco">{{ usuario_nombres }}</h2>
@@ -29,39 +23,155 @@
           {{ cuenta.nombre_plan }}
           <ion-icon name="chevron-down-outline" class="icon-bottom"></ion-icon>
         </ion-card-title>
+        <ion-card-subtitle style="margin-top: 0.3rem;">
+          {{ 'Aporte' | translate }}: USD {{ cuenta.monto }}
+          <ng-container *ngIf="cuenta.plan === '1'">/ {{ 'Invertido' }}: USD {{ cuenta.monto_invertido }}</ng-container>
+        </ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <p class="colo-plomo-datos p-datos-size">BALANCE</p>
-        <div class="div-precio-general">
-          <div class="div-precio">
-            <p class="colo-plomo-datos p-datos-size top-p-precio"><sup>USD</sup>{{ cuenta.monto }}</p>
-          </div>
-          <!-- <div class="div-precio ion-text-center">
-            <p class="colo-plomo-datos p-datos-size top-p-precio"><sup>USD</sup> 6.758</p>
-          </div>
-          <div class="div-precio ion-text-end">
-            <p class="colo-plomo-datos p-datos-size top-p-precio"><sup>USD</sup> 6.758</p>
-          </div> -->
-        </div>
+        <ion-row *ngIf="cuenta.plan === '0'">
+          <ion-col size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor efectivo' | translate }}
+            </p>
+            
+            <div class="div-precio-general">
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">
+                  <sup>USD</sup> {{ get_monto (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col *ngIf="cuenta.valor_rescate > 0" size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor de rescate' | translate }}
+            </p>
+            <div class="div-precio-general">    
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">&nbsp;
+                  <sup>USD</sup> {{ get_retencion (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        
+        <ion-row *ngIf="cuenta.plan === '1'">
+          <ion-col size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor efectivo' | translate }}
+            </p>
+            
+            <div class="div-precio-general">
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">
+                  <sup>USD</sup> {{ get_monto (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col *ngIf="cuenta.valor_rescate > 0" size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor de rescate' | translate }}
+            </p>
+            <div class="div-precio-general">    
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">&nbsp;
+                  <sup>USD</sup> {{ get_retencion (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="cuenta.plan === '2'">
+          <ion-col size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Cupon disponible' | translate }}
+            </p>
+
+            <div class="div-precio-general">
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">
+                  <sup>USD</sup> {{ cuenta.cupon_disponible | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col size="6" *ngIf="cuenta.disponible_efectivo > 0">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Efectivo disponible' | translate }}
+            </p>
+
+            <div class="div-precio-general">    
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">&nbsp;
+                  <sup>USD</sup> {{ cuenta.disponible_efectivo | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row *ngIf="cuenta.plan === '3'">
+          <ion-col size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor efectivo' | translate }}
+            </p>
+            
+            <div class="div-precio-general">
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">
+                  <sup>USD</sup> {{ get_monto (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+
+          <ion-col *ngIf="cuenta.valor_rescate > 0" size="6">
+            <p style="color: #fff;" class="colo-plomo-datos p-datos-size">
+              {{ 'Valor de rescate' | translate }}
+            </p>
+            <div class="div-precio-general">    
+              <div class="div-precio">
+                <p class="colo-plomo-datos p-datos-size top-p-precio">&nbsp;
+                  <sup>USD</sup> {{ get_retencion (cuenta) | number : '1.2-2' }}
+                </p>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-card-content>
     </ion-card>
   </div>
 </ion-content>
+
+<ion-footer (click)="f ('inversiones-otras')" class="footer-idioma">
+  <p class="p-idioma"><ion-icon name="cash-outline" class="icon-blanco-footer"></ion-icon>
+    {{ 'Otras inversiones' | translate }}
+  </p>
+  <ion-icon name="chevron-forward-outline" class="icon-right-footer"></ion-icon>
+</ion-footer>
+
 <ion-footer mode="ios">
   <div (click)="go_page ('home')" class="div-footer">
     <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
-    <p class="p-footer p-azul-footer">Cuentas</p>
+    <p class="p-footer p-azul-footer">{{ 'Cuentas' | translate }}</p>
   </div>
   <div (click)="go_page ('noticias')" class="div-footer">
     <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
-    <p class="p-footer">Noticias</p>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
   </div>
   <div (click)="go_page ('perfil')" class="div-footer">
     <ion-icon name="person-outline" class="icon-footer"></ion-icon>
-    <p class="p-footer">Perfil</p>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
   </div>
   <div (click)="go_page ('contacto')" class="div-footer">
     <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
-    <p class="p-footer">Contacto</p>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
   </div>
 </ion-footer>

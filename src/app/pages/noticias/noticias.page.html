@@ -1,27 +1,19 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title class="ion-text-center">NOTICIAS</ion-title>
+    <ion-title class="ion-text-center">{{ 'Noticias' | translate }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="div-card-noticia">
-    <ion-card class="card-noticias">
+    <ion-card class="card-noticias" *ngFor="let item of items" (click)="ver_detalle (item)">
       <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+        <img [src]="get_image (item.imagen)">
       </ion-avatar>
       <div class="div-fecha-titulo">
-        <p class="p-fecha-año">17 agosto, 2020</p>
-        <h6 class="h6-titulo-noticia">Resumen de mercados (17/08)</h6>
-      </div>
-    </ion-card>
-    <ion-card class="card-noticias">
-      <ion-avatar>
-        <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
-      </ion-avatar>
-      <div class="div-fecha-titulo">
-        <p class="p-fecha-año">17 agosto, 2020</p>
-        <h6 class="h6-titulo-noticia">Resumen de mercados (17/08)</h6>
+        <p class="p-fecha-año" style="margin: 0px">{{ get_format_date (item.created_at) }}</p>
+        <h6 class="h6-titulo-noticia" style="margin-top: 6px;">{{ item.titulo }}</h6>
+        <p>{{ item.resumen }}</p>
       </div>
     </ion-card>
   </div>
@@ -29,18 +21,18 @@
 <ion-footer mode="ios">
   <div (click)="go_page ('home')" class="div-footer">
     <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
-    <p class="p-footer">Cuentas</p>
+    <p class="p-footer">{{ 'Cuentas' | translate }}</p>
   </div>
   <div (click)="go_page ('noticias')" class="div-footer">
     <ion-icon name="notifications-outline" class="icon-footer icon-azul-footer"></ion-icon>
-    <p class="p-footer p-azul-footer">Noticias</p>
+    <p class="p-footer p-azul-footer">{{ 'Noticias' | translate }}</p>
   </div>
   <div (click)="go_page ('perfil')" class="div-footer">
     <ion-icon name="person-outline" class="icon-footer"></ion-icon>
-    <p class="p-footer">Perfil</p>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
   </div>
   <div (click)="go_page ('contacto')" class="div-footer">
     <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
-    <p class="p-footer">Contacto</p>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
   </div>
 </ion-footer>

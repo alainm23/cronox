@@ -1,0 +1,89 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="back ()">
+        <ion-icon name="chevron-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    
+    <ion-title class="ion-text-center">
+      {{ 'Solicitar retiro' | translate }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="div-card-datos">
+    <ng-container *ngIf="plan === '0' || plan === '1'">
+      <ion-item style="padding: 1rem;">
+        <ion-label class="label-color">
+          <p>{{ 'Valor disponible' | translate }}: USD {{ valor_disponible | number : '1.2-2' }}</p>
+          <p *ngIf="retencion === '1'">{{ 'Retención de impuestos (SUNAT)' | translate }}: USD {{ retencion_impuestos | number : '1.2-2' }}</p>
+          <p>{{ 'Monto maximo a retirar' | translate }}: USD {{ monto_retirar | number : '1.2-2' }}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <ng-container *ngIf="plan === '2'">
+      <ion-item style="padding: 1rem;">
+        <ion-label class="label-color">
+          <p>{{ 'Gastos de fondo según reglamento de inversión' | translate }}: USD {{ gastos_del_fondo_reglamento | number : '1.2-2' }}</p>
+          <p *ngIf="monto_retenido > 0">{{ 'Retención de impuestos (SUNAT)' | translate }}: USD {{ monto_retenido | number : '1.2-2' }}</p>
+          <p>{{ 'Disponible efectivo' | translate }}: USD {{ monto_retirar | number : '1.2-2' }}</p>
+        </ion-label>
+      </ion-item>
+    </ng-container>
+
+    <form [formGroup]="form">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">{{ 'Valor retiro' | translate }} - (USD 1 - USD {{ monto_retirar }})</ion-label>
+              <ion-input [max]="monto_retirar" min="1" formControlName="valor_rescate" placeholder="{{ 'Valor retiro' | translate }}" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">{{ 'Titular de la cuenta' | translate }}</ion-label>
+              <ion-input formControlName="titular_cuenta_tb" placeholder="{{ 'Titular' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">{{ 'Nombre del banco o institucion financiera' | translate }}</ion-label>
+              <ion-input formControlName="nombre_banco_tb" placeholder="{{ 'Nombre de banco' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">{{ 'Número de la cuenta' | translate }}</ion-label>
+              <ion-input formControlName="numero_cuenta_tb" placeholder="{{ 'Numero de cuenta' | translate }}" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">CCI / Swift</ion-label>
+              <ion-input formControlName="cci_swift_tb" placeholder="{{ 'CCI/Swift' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-label position="stacked">{{ 'Observaciones adicionales' | translate }}</ion-label>
+              <ion-textarea formControlName="comentario" rows="5" placeholder="" type="text"></ion-textarea>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+
+  <ion-button (click)="solicitar ()" class="btn-cuenta">
+    {{ 'Solicitar retiro' | translate }}
+  </ion-button>
+</ion-content>

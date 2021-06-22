@@ -12,35 +12,41 @@ import { ApiService } from '../../services/api.service';
 export class PaisesSeleccionarPage implements OnInit {
   items: any [] = [];
   _items: any [] = [];
-  constructor (private modalController: ModalController, private api: ApiService,
+  constructor (private modalController: ModalController, public api: ApiService,
     private loadingController: LoadingController) { }
 
   async ngOnInit() {
-    const loading = await this.loadingController.create({
-      message: 'Procesando...'
-    });
-
-    await loading.present ();
-
-    this.api.get_lista_paises ().subscribe ((res: any) => {
-      console.log (res);
-      this.items = res.paises;
-      this._items = res.paises;
-
-      this.items.unshift ({
-        codigo_dos_digitos: "PE",
-        codigo_tres_digitos: "PER",
-        created_at: null,
-        id: 173,
-        nombre: "Peru",
-        updated_at: null
+    if (this.api.PAISES.length <= 0) {
+      const loading = await this.loadingController.create({
+        message: 'Procesando...'
       });
+  
+      await loading.present ();
+  
+      this.api.get_lista_paises ().subscribe ((res: any) => {
+        this.api.PAISES = res.paises;
 
-      loading.dismiss ();
-    }, error => {
-      console.log (error);
-      loading.dismiss ();
-    });
+        this.items = res.paises;
+        this._items = res.paises;
+  
+        this.items.unshift ({
+          codigo_dos_digitos: "PE",
+          codigo_tres_digitos: "PER",
+          created_at: null,
+          id: 173,
+          nombre: "Peru",
+          updated_at: null
+        });
+  
+        loading.dismiss ();
+      }, error => {
+        console.log (error);
+        loading.dismiss ();
+      });
+    } else {
+      this.items = this.api.PAISES;
+      this._items = this.api.PAISES;
+    }
   }
 
   back () {

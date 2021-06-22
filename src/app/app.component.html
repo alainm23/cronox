@@ -1,3 +1,80 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="end" type="overlay" menuId="menu" contentId="menu">  
+    <ion-content style="position: relative;">  
+      <ion-item class="item-perfil" lines="none">
+        <ion-avatar  class="avatar-perfil">
+          <img [src]="api.USER_ACCESS.imagen">
+        </ion-avatar>
+        <ion-label class="label-perfil">
+          <span class="label-span-nombre ion-text-wrap" style="color: #fff">{{ api.USER_ACCESS?.nombres }} {{ api.USER_ACCESS?.apellidos }}</span><br><span class="label-span-pnt">
+            <span class="ion-text-wrap" ion-text style="color: #fff;" color="light">
+              {{ api.USER_ACCESS?.rol }}
+            </span>
+          </span>
+        </ion-label>
+      </ion-item>
+
+      <ion-button class="btnmenu" (click)="close_menu ()"><ion-icon name="close-sharp"></ion-icon></ion-button>
+
+      <ion-list class="user-list">
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="go_root ('home-agente')" lines="none" class="item">
+            <ion-icon name="home-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Cuentas' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>  
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="go_root ('tramites')" lines="none" class="item">
+            <ion-icon name="albums-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Tramites' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>  
+
+        <ion-menu-toggle *ngIf="api.USER_ACCESS.rol !== 'Agente'" auto-hide="false">
+          <ion-item (click)="go_root ('asesores')" lines="none" class="item">
+            <ion-icon name="people-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Asesores' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle> 
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="go_root ('comisiones')" lines="none" class="item">
+            <ion-icon name="cash-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Comisiones' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="go_root ('ilustrador')" lines="none" class="item">
+            <ion-icon name="analytics-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Ilustrador' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="go_root ('documentos')" lines="none" class="item">
+            <ion-icon name="book-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Biblioteca' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>
+
+        <ion-menu-toggle auto-hide="false">
+          <ion-item (click)="salir ()" lines="none" class="item">
+            <ion-icon name="log-out-outline"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label>{{ 'Salir' | translate }}</ion-label>
+          </ion-item>   
+        </ion-menu-toggle>   
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+  <ion-router-outlet id="menu"></ion-router-outlet>
 </ion-app>

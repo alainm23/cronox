@@ -1,0 +1,877 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title class="ion-text-center">
+      {{ get_plan_texto (tipo) }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-fab *ngIf="edit === 'true'" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button color="orange">
+      <ion-icon name="ellipsis-vertical"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button [disabled]="validar_form ()" (click)="submit ()" color="orange">
+        <ion-icon name="save"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button (click)="submit (true)" color="orange">
+        <ion-icon name="send"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-segment [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="participe">
+      <ion-label>{{ 'Participe' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="aporte">
+      <ion-label>{{ 'Aporte' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button *ngIf="tipo === '0' || tipo === '1'" value="portafolio">
+      <ion-label>{{ 'Portafolio' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="documentos">
+      <ion-label>{{ 'Documentos' | translate }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="div-card-datos">
+    <form [formGroup]="participe_form" *ngIf="segment_value === 'participe'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="nombres" placeholder="{{ 'Nombres' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="apellidos" placeholder="{{ 'Apellidos' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="sexo" placeholder="{{ 'Sexo' | translate }}" interface="popover">
+                <ion-select-option value="Hombre">{{ 'Masculino' | translate }}</ion-select-option>
+                <ion-select-option value="Mujer">{{ 'Femenino' | translate }}</ion-select-option>
+                <ion-select-option value="Otro">{{ 'Otro' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="correo" placeholder="{{ 'Correo electrónico' | translate }}" type="email"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="tipo_documento" placeholder="{{ 'DNI/CE' | translate }}" interface="popover">
+                <ion-select-option value="Documento de identidad">{{ 'DNI' | translate }}</ion-select-option>
+                <ion-select-option value="Pasaporte">{{ 'Pasaporte' | translate }}</ion-select-option>
+                <ion-select-option value="Carnet de extranjería">{{ 'C.E.' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="8">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="nro_doc" placeholder="{{ 'Nro. de documento' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="idioma" placeholder="{{ 'Idioma' | translate }}" interface="popover">
+                <ion-select-option value="Español">{{ 'Español' | translate }}</ion-select-option>
+                <ion-select-option value="Ingles">{{ 'Ingles' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-datetime displayFormat="DD/MM/YYYY" formControlName="fecha_nacimiento" placeholder="{{ 'Fecha de nacimiento' | translate }}">
+              </ion-datetime>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="ocupacion" placeholder="{{ 'Ocupación' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item (click)="seleccionar_pais ('participe_form', 'pais_nacimiento', 'id_pais_nacimiento')" lines="none" class="item-bottom">
+              <ion-input formControlName="pais_nacimiento" placeholder="{{ 'País de nacimiento' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item (click)="seleccionar_pais ('participe_form', 'nacionalidad', 'id_nacionalidad')" lines="none" class="item-bottom">
+              <ion-input formControlName="nacionalidad" placeholder="{{ 'Nacionalidad' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4" class="col-padding-right">
+            <ion-item lines="none" class="item-bottom item-label">
+              <ion-input formControlName="codigo_pais_telf" placeholder="+51" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="8">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="celular" placeholder="{{ 'Celular' | translate }}" type="tel"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item (click)="seleccionar_pais ('participe_form', 'pais_residencia', 'id_pais_residencia')" lines="none" class="item-bottom">
+              <ion-input formControlName="pais_residencia" placeholder="{{ 'País de residencia' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="ciudad" placeholder="{{ 'Ciudad' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="codigo_postal" placeholder="{{ 'Codigo postal' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="direccion_residencial" placeholder="{{ 'Dirección residencial' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Origen de la riqueza' | translate }}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-list class="ion-no-padding" style="background-color: transparent;">
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Ingreso por empleo' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Empleo')" (ionChange)="riqueza_changed ($event.detail.checked, 'Empleo')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Ahorros' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Ahorros')" (ionChange)="riqueza_changed ($event.detail.checked, 'Ahorros')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Rescate o retiros de otras inversiones' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Rescate o retiros de otras inversiones')" (ionChange)="riqueza_changed ($event.detail.checked, 'Rescate o retiros de otras inversiones')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Venta de la propiedad' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Venta Propiedad')" (ionChange)="riqueza_changed ($event.detail.checked, 'Venta Propiedad')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Venta de acciones o inversiones' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Venta acciones o inversiones')" (ionChange)="riqueza_changed ($event.detail.checked, 'Venta acciones o inversiones')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Herencia' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Herencia')" (ionChange)="riqueza_changed ($event.detail.checked, 'Herencia')" color="light"slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Venta de la empresa' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Venta empresa')" (ionChange)="riqueza_changed ($event.detail.checked, 'Venta empresa')" color="light"slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Ganancias/dividendos de la empresa' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Ganancias/dividendos empresa')" (ionChange)="riqueza_changed ($event.detail.checked, 'Ganancias/dividendos empresa')" color="light"slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Acuerdo de divorcio' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Divorcio')" (ionChange)="riqueza_changed ($event.detail.checked, 'Divorcio')" color="light"slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Loteria/Juego de azar/regalos' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Lotería')" (ionChange)="riqueza_changed ($event.detail.checked, 'Lotería')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+              <ion-item class="ion-item-checkbox">
+                <ion-label>{{ 'Otro' | translate }}</ion-label>
+                <ion-checkbox [checked]="check_riqueza_value ('Otro')" (ionChange)="riqueza_changed ($event.detail.checked, 'Otro')" color="light" slot="start"></ion-checkbox>
+              </ion-item>
+            </ion-list>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'PEP/CEP y Antecedentes' | translate }}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '¿Su cliente es un PEP o CEP?' | translate }}
+            </p>
+
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="es_pep_cep" placeholder="{{ 'Si/No' | translate }}" interface="popover">
+                <ion-select-option value="Si">{{ 'Si' | translate }}</ion-select-option>
+                <ion-select-option value="No">{{ 'No' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '¿Su cliente es un familiar de una PEP o CEP?' | translate }}
+            </p>
+
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="es_familia_pep_cep" placeholder="{{ 'Si/No' | translate }}" interface="popover">
+                <ion-select-option value="Si">{{ 'Si' | translate }}</ion-select-option>
+                <ion-select-option value="No">{{ 'No' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '¿Su cliente es un socio de una PEP o CEP?' | translate }}
+            </p>
+
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="es_socio_pep_cep" placeholder="{{ 'Si/No' | translate }}" interface="popover">
+                <ion-select-option value="Si">{{ 'Si' | translate }}</ion-select-option>
+                <ion-select-option value="No">{{ 'No' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '(*) PEP: Persona Politicamente Expuesta/CEP: Persona Comercialmente Expuesta' | translate }}
+            </p>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '¿Su cliente ha sido condenado por algun delito?' | translate }}
+            </p>
+
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="condenado_delito" placeholder="{{ 'Si/No' | translate }}" interface="popover">
+                <ion-select-option value="Si">{{ 'Si' | translate }}</ion-select-option>
+                <ion-select-option value="No">{{ 'No' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ '¿Su cliente ha sido despedido de empleos anteriores por mala conducta o comportamiento?' | translate }}
+            </p>
+
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="despido_conducta_comportamiento" placeholder="{{ 'Si/No' | translate }}" interface="popover">
+                <ion-select-option value="Si">{{ 'Si' | translate }}</ion-select-option>
+                <ion-select-option value="No">{{ 'No' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+
+    <form [formGroup]="aporte_form" *ngIf="segment_value === 'aporte'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Aporte regular' | translate }}</h2>
+                <p>{{ 'Informacion referente al aporte del participe' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="monto" placeholder="{{ 'Aporte (USD)' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col *ngIf="tipo === '0'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="frecuencia" placeholder="{{ 'Frecuencia' | translate }}" interface="popover">
+                <ion-select-option value="12">{{ 'Mensual' | translate }}</ion-select-option>
+                <ion-select-option value="4">{{ 'Trimestral' | translate }}</ion-select-option>
+                <ion-select-option value="2">{{ 'Semestral' | translate }}</ion-select-option>
+                <ion-select-option value="1">{{ 'Anual' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+          
+          <ion-col *ngIf="(edit === 'false' && (tipo === '0' || tipo === '1')) || tipo === '2'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select (ionChange)="nro_serie_changed ($event)" formControlName="numero_serie" placeholder="{{ 'N° de serie' | translate }}" interface="popover">
+                <ion-select-option [value]="item.id" *ngFor="let item of cupones">
+                  {{ item.nombre }}
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="tipo === '3'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="numero_serie" placeholder="{{ 'N° de serie' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input *ngIf="tipo === '2'" readonly formControlName="termino_visible" placeholder="{{ 'Termino' | translate }}" type="text"></ion-input>
+              
+              <ion-select *ngIf="tipo !== '2'" formControlName="termino" placeholder="{{ 'Termino' | translate }}" interface="popover">
+                <ion-select-option *ngFor="let item of get_terminos_validos ()" [value]="item">
+                  {{ item }} años
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="tipo === '2' || tipo === '3'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input readonly formControlName="cupon_visible" placeholder="{{ 'Cupon' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="tipo === '2'">
+            <ion-item lines="none" class="item-bottom">
+              <ion-datetime readonly displayFormat="DD/MM/YYYY" formControlName="fecha_vencimiento" placeholder="Fecha de Vencimiento"></ion-datetime>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="tipo === '0'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="fecha_pago" placeholder="{{ 'Fecha de pago' | translate }}" interface="popover">
+                <ion-select-option value="1">1</ion-select-option>
+                <ion-select-option value="15">15</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="tipo === '1' || tipo === '2'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="tipo" placeholder="{{ 'Seleccionar Tipo Inversionista' | translate }}" interface="popover">
+                <ion-select-option value="0">{{ 'Bonista' | translate }}</ion-select-option>
+                <ion-select-option value="1">{{ 'Participe' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content ion-text-wrap">
+                <h2>{{ 'Seleccione un metodo de pago' | translate }}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <!-- <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select color="dark" (ionChange)="metodo_pago_changed ($event.detail.value)" formControlName="metodo_pago" placeholder="Metodo de pago" interface="popover">
+                <ion-select-option value="tarjeta">{{ 'Tarjeta de credito' | translate }}</ion-select-option>
+                <ion-select-option value="transferencia">{{ 'Transferencia bancaria' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col> -->
+
+          
+          <ng-container>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="nombre_banco_tc" placeholder="{{ 'Nombre del banco de la tarjeta de credito' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item (click)="seleccionar_pais ('aporte_form', 'pais_banco_tc', 'id_pais_banco_tc')" lines="none" class="item-bottom">
+                <ion-input formControlName="pais_banco_tc" placeholder="{{ 'País' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="nombre_titular_tc" placeholder="{{ 'Nombre del titular' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="apellido_titular_tc" placeholder="{{ 'Apellido del titular' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="numero_tarjeta_tc" placeholder="{{ 'Numero de tarjeta' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none" class="item-bottom">
+                <ion-select formControlName="mes_vencimiento_tc" placeholder="{{ 'Mes' | translate }}" interface="alert">
+                  <ion-select-option value="1">Enero</ion-select-option>
+                  <ion-select-option value="2">Febrero</ion-select-option>
+                  <ion-select-option value="3">Marzo</ion-select-option>
+                  <ion-select-option value="4">Abril</ion-select-option>
+                  <ion-select-option value="5">Mayo</ion-select-option>
+                  <ion-select-option value="6">Junio</ion-select-option>
+                  <ion-select-option value="7">Julio</ion-select-option>
+                  <ion-select-option value="8">Agosto</ion-select-option>
+                  <ion-select-option value="9">Septiembre</ion-select-option>
+                  <ion-select-option value="10">Octubre</ion-select-option>
+                  <ion-select-option value="11">Noviembre</ion-select-option>
+                  <ion-select-option value="12">Dociembre</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-item lines="none" class="item-bottom">
+                <ion-select formControlName="anio_vencimiento_tc" placeholder="{{ 'Año' | translate }}" interface="alert">
+                  <ion-select-option value="2020">2020</ion-select-option>
+                  <ion-select-option value="2021">2021</ion-select-option>
+                  <ion-select-option value="2022">2022</ion-select-option>
+                  <ion-select-option value="2023">2023</ion-select-option>
+                  <ion-select-option value="2024">2024</ion-select-option>
+                  <ion-select-option value="2025">2025</ion-select-option>
+                  <ion-select-option value="2026">2026</ion-select-option>
+                  <ion-select-option value="2027">2027</ion-select-option>
+                  <ion-select-option value="2028">2028</ion-select-option>
+                  <ion-select-option value="2029">2029</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="cvc_tc" placeholder="CVV" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Información bancaria del inversionista' | translate }}</h2>
+                <p class="color-orange">{{ '(Requerido)' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ng-container>
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="nombre_banco_tb" placeholder="{{ 'Nombre del banco o institucion financiera' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="cci_swift_tb" placeholder="CCI / Swift" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="numero_cuenta_tb" placeholder="{{ 'Número de la cuenta' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="titular_cuenta_tb" placeholder="{{ 'Titular de la cuenta' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="item-bottom">
+                <ion-input formControlName="comentarios_adicionales_tb" placeholder="{{ 'Comentarios adicionales' | translate }}" type="text"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ng-container>
+        </ion-row>
+      </ion-grid>
+    </form>
+
+    <form [formGroup]="portafolio_form" *ngIf="(segment_value === 'portafolio')">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2 class="ion-text-wrap">{{ 'Eleccion del portafolio para futuros aportes' | translate }}</h2>
+                <p class="ion-text-wrap">{{ 'Información referente al aporte del participe' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-right: 2rem; padding-left: 2rem;" size="12">
+            <ion-item>
+              <ion-toggle formControlName="dsa" slot="start"></ion-toggle>
+              <ion-label style="color: #fff;" class="ion-text-wrap">DSA</ion-label>
+            </ion-item>
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ 'dsa_text' | translate }}
+            </p>
+          </ion-col>
+
+          <ion-col style="padding-right: 2rem; padding-left: 2rem;" *ngIf="tipo === '0'" size="12">
+            <ion-item>
+              <ion-toggle (ionChange)="abc_changed ($event.detail.checked)" formControlName="abc" slot="start"></ion-toggle>
+              <ion-label style="color: #fff;" class="ion-text-wrap">Estrategia "ABC"</ion-label>
+            </ion-item>
+            <p class="ion-text-wrap" style="color: #fff;">
+              {{ 'abc_text' | translate }}
+            </p>
+          </ion-col>
+
+          <ion-col style="padding-right: 2rem; padding-left: 2rem;" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input readonly formControlName="numero_serie" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ng-container *ngIf="portafolio_form.value.abc === false" formArrayName="portafolios">
+            <ng-container *ngFor="let portafolio of portafolio_form.get ('portafolios').controls; let i=index">
+              <ng-container [formGroupName]="i">
+                <ion-col style="padding-left: 2rem;"  size="6">
+                  <ion-item lines="none" class="item-bottom">
+                    <ion-select (ionChange)="tipo_portafolio_changed ($event)" formControlName="tipo_portafolio" placeholder="{{ 'Portafolio' | translate }}" interface="popover">
+                      <ion-select-option value="Audaz">{{ 'Audaz' | translate }}</ion-select-option>
+                      <ion-select-option value="Balanceado">{{ 'Balanceado' | translate }}</ion-select-option>
+                      <ion-select-option value="Conservador">{{ 'Conservador' | translate }}</ion-select-option>
+                      <ion-select-option value="FAANG">{{ 'FAANG' | translate }}</ion-select-option>
+                      <ion-select-option value="CJ-DAF">{{ 'CJ-DAF' | translate }}</ion-select-option>
+                      <ion-select-option value="Low VF">{{ 'Low VF' | translate }}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col size="4">
+                  <ion-item lines="none" class="item-bottom">
+                    <ion-input min="0" max="100" formControlName="porcentaje" placeholder="{{ 'Porcentaje regular' | translate }}" type="number">
+                    </ion-input>
+                  </ion-item>
+                </ion-col>
+
+                <ion-col style="padding-right: 2rem;" size="2" style="align-self: center;">
+                  <ion-button (click)="eliminar_portafolio (i)" color="orange" fill="clear">
+                    <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+                  </ion-button>
+                </ion-col>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+
+          <ion-col style="padding-right: 2rem; padding-left: 2rem;" *ngIf="portafolio_form.value.portafolios.length > 0 && (get_total_portafolios () < 100 || get_total_portafolios () > 100)" size="12">
+            <p style="color: red; margin-left: 6px;">{{ '* El total debe de ser 100%' | translate }}</p>
+          </ion-col>
+
+          <ion-col style="padding-right: 2rem; padding-left: 1rem;" *ngIf="portafolio_form.value.abc === false" size="12">
+            <ion-button [disabled]="validar_portafolio ()" (click)="agregar_portafolio ()" fill="clear" color="orange">
+              <ion-icon slot="start" name="add-circle"></ion-icon>
+              {{ 'Agregar portafolio' | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+
+    <form *ngIf="segment_value === 'documentos'">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content ion-text-wrap">
+                <h2>{{ 'Documentos Principales' | translate }}</h2>
+                <p>{{ 'En esta seccion podra cargar todos los documentos pendientes' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="edit === 'false'" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Contrato del participe' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_solicitud_firmada')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_solicitud_firmada')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_solicitud_firmada')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_solicitud_firmada')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_solicitud_firmada')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="edit === 'false' && tipo === '0'" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Cronograma de inversion' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_cronograma_inversion')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_cronograma_inversion')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_cronograma_inversion')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_cronograma_inversion')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_cronograma_inversion')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Documentos de identidad (Adelante)' | translate }} *
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_doc_identidad')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_doc_identidad')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_doc_identidad')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_doc_identidad')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_doc_identidad')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Documentos de identidad (Atras)' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_doc_identidad_reverso')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_doc_identidad_reverso')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_doc_identidad_reverso')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_doc_identidad_reverso')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_doc_identidad_reverso')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="edit === 'false' && (tipo === '0' || tipo === '1')" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Ilustracion firmada' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_ilustracion_firmada')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_ilustracion_firmada')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_ilustracion_firmada')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_ilustracion_firmada')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_ilustracion_firmada')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="(tipo === '1' || tipo === '2' || tipo === '3')" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Comprobante de aporte' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_comprobante_aporte')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_comprobante_aporte')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_comprobante_aporte')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_comprobante_aporte')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_comprobante_aporte')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="edit === 'false' && tipo === '0'" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Autorizacion de cargo' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_autorizacion_cargo')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_autorizacion_cargo')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_autorizacion_cargo')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_autorizacion_cargo')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_autorizacion_cargo')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Prueba de residencia' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_prueba_residencia')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_prueba_residencia')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_prueba_residencia')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_prueba_residencia')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_prueba_residencia')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" *ngIf="edit === 'false'" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Declaracion del participe' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_declaracion_cliente')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_declaracion_cliente')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_declaracion_cliente')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_declaracion_cliente')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_declaracion_cliente')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item class="ion-text-wrap">
+              <div class="linea"></div>
+              <ion-label class="header-content ion-text-wrap">
+                <h2>{{ 'Otros documentos' | translate }}</h2>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Documento adicional' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_doc_opcional_1')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_doc_opcional_1')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button *ngIf="edit === 'true'" (click)="save_image ('file_doc_opcional_1')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_doc_opcional_1')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span class="no-margin-inline-start" *ngIf="imagenes.has ('file_doc_opcional_1')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="padding-left: 2rem; padding-right: 2rem;" size="12">
+            <ion-item>
+              <ion-label style="color: #fff; font-size: 14px;" class="ion-text-wrap">
+                {{ 'Documento adicional' | translate }}
+              </ion-label>
+
+              <div class="no-margin-inline-start" *ngIf="imagenes.has ('file_doc_opcional_2')" slot="end">
+                <ion-button fill="clear" (click)="descargar ('file_doc_opcional_2')" color="light">
+                  <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+              <ion-button class="no-margin-inline-start" *ngIf="edit === 'true'" (click)="save_image ('file_doc_opcional_2')" color="orange" slot="end">
+                <span *ngIf="!imagenes.has ('file_doc_opcional_2')">
+                  {{ 'Cargar' | translate }}
+                </span>
+                <span *ngIf="imagenes.has ('file_doc_opcional_2')">
+                  {{ 'Actualizar' | translate }}
+                </span>
+              </ion-button>
+            </ion-item>
+          </ion-col>
+
+          <ion-col style="background: #181818;" size="12">
+            <ion-item class="ion-text-wrap">
+              <!-- <div class="linea"></div> -->
+              <ion-label class="header-content ion-text-wrap">
+                <!-- <h2>{{ 'Documentos Principales' | translate }}</h2> -->
+                <p style="color: #fff;">{{ 'Una vez aprobado el tramite, los documentos legales serán enviados a su cliente para que sean firmados digitalmente via Docsign' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+</ion-content>

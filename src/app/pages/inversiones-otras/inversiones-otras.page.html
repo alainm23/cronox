@@ -1,0 +1,25 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title class="ion-text-center">
+      Otras inversiones
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list class="list">
+    <ion-item (click)="descargar (item.documento)" *ngFor="let item of items">
+      <ion-label class="ion-text-wrap">
+        <ion-icon name="document-outline"></ion-icon>
+        {{ get_nombre (item.nombre) }}
+      </ion-label>
+      <ion-button color="orange" fill="clear">
+        <ion-icon slot="end" name="cloud-download-outline"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-list>
+</ion-content>

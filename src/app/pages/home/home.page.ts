@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
 
       this.api.USER_ACCESS.nombres = res.user.nombres;
       this.api.USER_ACCESS.apellidos = res.user.apellidos;
-      this.api.USER_ACCESS.celular = res.user.celular;
+      this.api.USER_ACCESS.telefono = res.user.celular;
       this.api.USER_ACCESS.codigo_pais_telf = res.user.codigo_pais_telf;
       this.api.USER_ACCESS.correo = res.user.correo;
       this.api.USER_ACCESS.pais = res.user.pais;
@@ -44,18 +44,46 @@ export class HomePage implements OnInit {
       } else {
         this.loading = false;
       }
+    }, error => {
+      console.log (error);
+      if (event !== null) {
+        event.target.complete ();
+      } else {
+        this.loading = false;
+      }
     });
   }
 
   ver_cuenta (cuenta: any) {
-    console.log (cuenta);
     this.navController.navigateForward (['cuenta-detalle', cuenta.id]);
-    // this.api.get_cuenta_detalle (cuenta.id).subscribe ((res: any) => {
-    //   console.log (res);
-    // });
   }
 
   go_page (page: string) {
     this.navController.navigateRoot (page);
+  }
+
+  f (page: string) {
+    this.navController.navigateForward (page);
+  }
+
+  get_monto (cuenta: any) {
+    let monto: number = parseFloat (cuenta.monto);
+    let valor_efectivo = parseFloat (cuenta.valor_efectivo);
+
+    if (valor_efectivo > 0) {
+      monto = cuenta.valor_efectivo;
+    }
+
+    return monto;
+  }
+
+  get_retencion (cuenta: any) {
+    let monto: number = parseFloat (cuenta.valor_rescate);
+
+    //if (cuenta.retencion === '1') {
+      // smonto = monto - (monto * 0.05);
+    // }
+
+    return monto;
   }
 }

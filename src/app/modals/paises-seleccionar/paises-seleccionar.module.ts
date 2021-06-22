@@ -7,13 +7,15 @@ import { IonicModule } from '@ionic/angular';
 import { PaisesSeleccionarPageRoutingModule } from './paises-seleccionar-routing.module';
 
 import { PaisesSeleccionarPage } from './paises-seleccionar.page';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PaisesSeleccionarPageRoutingModule
+    PaisesSeleccionarPageRoutingModule,
+    TranslateModule
   ],
   declarations: [PaisesSeleccionarPage]
 })

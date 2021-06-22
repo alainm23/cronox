@@ -1,0 +1,86 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'Cuentas' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged ($event.detail.value)" [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="todas">
+      <ion-label>{{ 'Todas' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="pendiente">
+      <ion-label>{{ 'Pendientes' | translate }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="div-card-datos">
+    <ion-searchbar class="searchbar" color="dark" mode="ios" (ionChange)="search ($event.detail.value)" placeholder="Buscar..."></ion-searchbar>
+    <div style="width: 100%;" class="ion-text-center" *ngIf="items.length <= 0">
+      <ion-item style="--background: transparent;" class="ion-text-center" lines="none">
+        <ion-label>
+          <h2 style="color: #fff;">No hay elementos</h2>
+        </ion-label>
+      </ion-item>
+    </div>
+    
+    <ion-card *ngFor="let item of items" class="card-datos">
+      <div class="div-linea"></div>
+      <ion-card-header>
+        <ion-card-title>
+          {{ get_plan_texto (item.plan) }}
+          <ion-icon (click)="presentPopover ($event, item)" class="icon-bottom" name="ellipsis-vertical-outline"></ion-icon>
+        </ion-card-title>
+        <ion-card-subtitle style="margin-top: 0px;">
+          {{ get_format_date (item.created_at) }} / {{ item.codigo }}
+        </ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content style="padding-left: 10px;">
+        <ion-row>
+          <ion-col size="6">
+            <p class="colo-plomo-datos p-datos-size">{{ 'Inversionista' | translate }}</p>
+            <p style="line-height: 0.85; font-size: 18px;">{{ item.inversionista }}</p>
+          </ion-col>
+
+          <ion-col size="6">
+            <p class="colo-plomo-datos p-datos-size">{{ 'Asesor' | translate }}</p>
+            <p style="line-height: 0.85; font-size: 18px;">{{ item.asesor }}</p>
+          </ion-col>
+
+          <ion-col size="6">
+            <p class="colo-plomo-datos p-datos-size">{{ 'Aporte anual' | translate }}</p>
+            <p style="line-height: 0.85; font-size: 18px;"><sup>USD</sup> {{ get_aporte (item.monto, item.frecuencia) | number:'1.0-0' }}</p>
+          </ion-col>
+
+          <ion-col size="6">
+            <p class="colo-plomo-datos p-datos-size">{{ 'Termino' | translate }}</p>
+            <p style="line-height: 0.85; font-size: 18px;">{{ item.termino }} años</p>
+          </ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer icon-azul-footer"></ion-icon>
+    <p class="p-footer p-azul-footer">{{ 'Cuentas' | translate }}</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
+  </div>
+</ion-footer>

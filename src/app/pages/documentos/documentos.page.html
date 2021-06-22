@@ -1,0 +1,87 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'Biblioteca' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged ($event.detail.value)" [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="todas">
+      <ion-label>{{ 'Negocios' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="herramientas_venta">
+      <ion-label>{{ 'Herramientas' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="presentanciones">
+      <ion-label>{{ 'Presentaciones' | translate }}</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="varios">
+      <ion-label>{{ 'Varios' | translate }}</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="div-card-datos">
+    <ion-grid *ngIf="segment_value === 'herramientas_venta' || segment_value === 'presentanciones' || segment_value === 'varios'">
+      <ion-row>
+        <ion-col size="12" *ngFor="let item of get_documentos (segment_value)">
+          <ion-item>
+            <ion-label style="color: #fff;" class="ion-text-wrap">
+              <ion-icon name="document-outline"></ion-icon>
+              {{ get_nombre (item.nombre) }}
+            </ion-label>
+  
+            <ion-button (click)="descargar (item.documento)" fill="clear" color="orange" slot="end">
+              <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-list style="width: 100%;" *ngIf="segment_value === 'todas'">
+      <ng-container *ngFor="let cuenta of cuentas">
+        <ion-list-header class="list-header" (click)="toggled (cuenta)">
+          <ion-label>{{ cuenta.nombre }}</ion-label>
+          <ion-button fill="clear" color="orange">
+            <ion-icon [ngStyle]="{'transform': cuenta.visible ? 'rotate(90deg)' : 'none' }" class="transition" name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-list-header>
+        <ng-container *ngIf="cuenta.visible">
+          <ion-item *ngFor="let item of get_documentos (cuenta.id)">
+            <ion-label style="color: #fff;" class="ion-text-wrap">
+              <ion-icon name="document-outline"></ion-icon>
+              {{ get_nombre (item.nombre) }}
+            </ion-label>
+    
+            <ion-button *ngIf="validar_descarga (item.documento)" style="padding-right: 6px;" (click)="descargar (item.documento)" fill="clear" color="orange" slot="end">
+              <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ng-container>
+      </ng-container>
+    </ion-list>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Cuentas' | translate }}</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
+  </div>
+</ion-footer>

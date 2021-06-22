@@ -16,6 +16,26 @@ ion-toolbar
     padding: 0px 40px;
   }
 }
+
+.avatar {
+  height: 96px;
+}
+
+.linea {
+  height: 64px;
+  width: 6px;
+  background-color: #FF6600;
+  border-radius: 8px;
+}
+
+.header-content {
+  margin-left: 24px;
+  h2 {
+    color: #FF6600;
+    font-weight: 600;
+  }
+}
+
 ion-content
 {
   --background: #222222;

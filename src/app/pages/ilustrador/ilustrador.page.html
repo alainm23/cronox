@@ -1,0 +1,188 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-title class="ion-text-center">{{ 'Ilustrador' | translate }}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment (ionChange)="segmentChanged ($event.detail.value)" [(ngModel)]="segment_value" mode="ios">
+    <ion-segment-button value="0">
+      <ion-label>Capital Futuro</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label>Inversión Plus</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="2">
+      <ion-label>Bond liquid</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="3">
+      <ion-label>Real State</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <div class="div-card-datos">
+    <form [formGroup]="form">
+      <ion-grid>
+        <ion-row>
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Información del inversionista' | translate }}</h2>
+                <p>{{ 'Ingrese sus datos personales' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="nombres" placeholder="{{ 'Nombres' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="apellidos" placeholder="{{ 'Apellidos' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item (ionFocus)="seleccionar_pais (form, 'pais_nombre', 'pais')" lines="none" class="item-bottom">
+              <ion-input formControlName="pais_nombre" placeholder="{{ 'País' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Aporte' | translate }}</h2>
+                <p class="ion-text-wrap">
+                  {{ 'Ingrese la moneda, aporte, frecuencia y termino del plan' | translate }}
+                </p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <!-- <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="moneda" placeholder="{{ 'Moneda' | translate }}" interface="popover">
+                <ion-select-option value="USD">Dolares ($)</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col> -->
+          
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="aporte" placeholder="{{ 'Aporte (USD)' | translate }}" type="text"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '0'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="frecuencia" placeholder="{{ 'Frecuencia' | translate }}" interface="popover">
+                <ion-select-option value="12">{{ 'Mensual' | translate }}</ion-select-option>
+                <ion-select-option value="4">{{ 'Trimestral' | translate }}</ion-select-option>
+                <ion-select-option value="2">{{ 'Semestral' | translate }}</ion-select-option>
+                <ion-select-option value="1">{{ 'Anual' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="termino" placeholder="{{ 'Termino' | translate }}" interface="popover">
+                <ion-select-option *ngFor="let item of get_terminos ()" [value]="item">
+                  {{ item }} años
+                </ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '2' || segment_value === '3'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="cupon" placeholder="{{ 'Cupon %' | translate }}" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '3'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="utilidad" placeholder="{{ 'Utilidad %' | translate }}" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '3'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-input formControlName="rendimiento" placeholder="{{ 'Rendimiento %' | translate }}" type="number"></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '0' || segment_value === '1'" size="12">
+            <ion-item>
+              <div class="linea"></div>
+              <ion-label class="header-content">
+                <h2>{{ 'Perfil de riesgo / Rendimiento' | translate }}</h2>
+                <p class="ion-text-wrap">{{ 'Seleccione el rendimiento basado en el perfil de riesgo' | translate }}</p>
+              </ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="segment_value === '0' || segment_value === '1'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="rendimiento" placeholder="{{ 'Rendimiento' | translate }}" interface="popover">
+                <ion-select-option value="9-faang">{{ 'FAANG' | translate }}</ion-select-option>
+                <ion-select-option value="9-daf">{{ 'CJ-DAF' | translate }}</ion-select-option>
+                <ion-select-option value="8-vf">{{ 'Low VF' | translate }}</ion-select-option>
+                <ion-select-option value="8-audaz">{{ 'Audaz' | translate }}</ion-select-option>
+                <ion-select-option value="6-balanceado">{{ 'Balanceado' | translate }}</ion-select-option>
+                <ion-select-option value="4-conservador">{{ 'Conservador' | translate }}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col *ngIf="form.value.rendimiento === '-1'" size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select formControlName="rendimiento_seleccionado" placeholder="{{ 'Rendimiento' | translate }}" interface="popover">
+                <ion-select-option value="4">4</ion-select-option>
+                <ion-select-option value="5">5</ion-select-option>
+                <ion-select-option value="6">6</ion-select-option>
+                <ion-select-option value="7">7</ion-select-option>
+                <ion-select-option value="8">8</ion-select-option>
+                <ion-select-option value="9">9</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" class="ion-text-center">
+            <ion-button (click)="submit ()" color="orange">
+              {{ 'Generar' | translate }}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </form>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Cuentas' | translate }}</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
+  </div>
+</ion-footer>

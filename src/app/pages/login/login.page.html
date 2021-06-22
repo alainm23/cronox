@@ -1,0 +1,18 @@
+<ion-content [fullscreen]="true">
+  <form [formGroup]="form">
+    <img src="assets/logocronoxblanco.png" class="logo">
+    <h1 class="ion-text-center">{{ 'Iniciar Sesión' | translate }}</h1>
+    <ion-item lines="none" class="item-bottom">
+      <ion-input type="email" formControlName="email" placeholder="{{ 'Correo electrónico' | translate }}"></ion-input>
+    </ion-item>
+    <ion-item lines="none" class="item-relative">
+      <ion-input [type]="type_password" formControlName="password" placeholder="{{ 'Contraseña' | translate }}" class="input-padding-right"></ion-input>
+      <ion-icon (click)="password_toggled ()" [name]="type_password === 'password' ? 'eye': 'eye-off'" class="icon-ojo"></ion-icon>
+    </ion-item>
+    <ion-button color="orange" [disabled]="loading || form.invalid" (click)="submit ()" class="btn-ingresar">
+      {{ 'Ingresar' | translate }}
+      <ion-spinner *ngIf="loading" name="lines-small" class="spinner-blanco"></ion-spinner>
+    </ion-button>
+    <p class="ion-text-center p-olvidaste" (click)="recuperar ()">{{ '¿Olvidastes tu Contraseña?' | translate }}</p>
+  </form>
+</ion-content>

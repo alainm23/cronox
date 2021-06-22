@@ -1,0 +1,60 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
+    
+    <ion-title class="ion-text-center">
+      {{ 'Comisiones' | translate }} 
+    </ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button color="light" autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="div-card-datos">
+    <ion-card class="card-list" *ngFor="let item of items">
+      <ion-card-header>
+        <ion-item mode="ios" class="item-list ion-no-padding" lines="none">
+          <ion-row class="row-widht">
+            <ion-col size="5" class="col-padding-left">
+              <h6 class="h6-list-titulo">{{ 'Fecha de pago' | translate }} </h6>
+              <p class="p-blanco-descripcion">{{ get_format (item.fecha_pago) }}</p>
+            </ion-col>
+            <ion-col size="5" class="col-padding-right ion-text-end">
+              <h6 class="h6-list-titulo">{{ 'Comision' | translate }}</h6>
+              <p class="p-blanco-descripcion"><sup>USD</sup> {{ item.comision }}</p>
+            </ion-col>
+            <ion-col class="ion-text-center" size="2">
+              <ion-button *ngIf="item.botones === 1" fill="clear" (click)="descargar (item)" class="icon-blanco-lsit">
+                <ion-icon slot="icon-only" name="cloud-download-outline"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+  </div>
+</ion-content>
+
+<ion-footer mode="ios">
+  <div (click)="go_page ('home')" class="div-footer">
+    <ion-icon name="analytics-sharp" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Cuentas' | translate }}</p>
+  </div>
+  <div (click)="go_page ('noticias')" class="div-footer">
+    <ion-icon name="notifications-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Noticias' | translate }}</p>
+  </div>
+  <div (click)="go_page ('perfil')" class="div-footer">
+    <ion-icon name="person-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Perfil' | translate }}</p>
+  </div>
+  <div (click)="go_page ('contacto')" class="div-footer">
+    <ion-icon name="mail-outline" class="icon-footer"></ion-icon>
+    <p class="p-footer">{{ 'Contacto' | translate }}</p>
+  </div>
+</ion-footer>

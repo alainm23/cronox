@@ -1,0 +1,26 @@
+<ion-header mode="ios">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button color="light" text=""></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="ion-text-center">{{ 'Noticias' | translate }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="content">
+    <div>
+      <ion-img-viewer
+        scheme="dark"
+        [src]="get_image (item.imagen)"
+        style="margin: 3rem;">
+      </ion-img-viewer>
+      <img-loader class="img-loader"  useImg></img-loader>
+    </div>
+    <!-- <img style="padding: 3rem;" [src]="get_image (item.imagen)"> -->
+    <h1 style="margin-bottom: 0px; color: #fff;">{{ item?.titulo }}</h1>
+    <p style="margin: 0px; color: #fff;"><small>{{ get_format_date (item?.created_at) }} - {{ item?.autor }}</small></p>
+    <p class="ion-text-wrap" style="color: #fff;">{{ item?.descripcion }}</p>
+  </div>
+</ion-content>
