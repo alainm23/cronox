@@ -21,7 +21,7 @@ export class ApiService {
   private usuario_subject = new Subject<any> ();
   constructor (public http: HttpClient, private translateService: TranslateService,
     private storage: Storage) {
-     this.URL_BASE = "https://portal.cronoxcapital.com.pe/api";
+     this.URL_BASE = "https://portal.cronox-capital.com/api";
   }
 
   usuario_changed (data: any) {

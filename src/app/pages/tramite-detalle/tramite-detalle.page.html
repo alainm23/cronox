@@ -144,6 +144,15 @@
           </ion-col>
 
           <ion-col size="12">
+            <ion-item lines="none" class="item-bottom">
+              <ion-select [interfaceOptions]="customAlertOptions" formControlName="jurisdiccion" placeholder="{{ 'Jurisdiccion' | translate }}">
+                <ion-select-option value="1">Perú</ion-select-option>
+                <ion-select-option value="3">Islas Virgenes Britanicas</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12">
             <ion-item>
               <div class="linea"></div>
               <ion-label class="header-content">

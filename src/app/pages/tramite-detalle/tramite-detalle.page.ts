@@ -44,6 +44,11 @@ export class TramiteDetallePage implements OnInit {
 
   ENVIAR_MESSAGE: string = '';
   cupones: any [] = [];
+
+  customAlertOptions: any = {
+    header: this.api.get_translate ('Jurisdiccion'),
+    translucent: true
+  };
   constructor (private camera: Camera, 
     private actionSheetController: ActionSheetController,
     private api: ApiService,
@@ -78,6 +83,7 @@ export class TramiteDetallePage implements OnInit {
       ciudad: new FormControl (null, [Validators.required]),
       codigo_postal: new FormControl (null, [Validators.required]),
       direccion_residencial: new FormControl (null, [Validators.required]),
+      jurisdiccion: new FormControl (null, [Validators.required]),
       riqueza: new FormControl ([]),
       es_pep_cep: new FormControl (null, [Validators.required]),
       es_familia_pep_cep: new FormControl (null, [Validators.required]),
