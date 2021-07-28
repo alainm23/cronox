@@ -102,6 +102,14 @@ export class CuentaDetallePage implements OnInit {
     this.dibujar_lineal ();
   }
 
+  get_fecha_contratacion () {
+    if (this.cuenta.fecha_contratacion === null) {
+      return this.cuenta.fecha_efectividad;
+    }
+
+    return this.cuenta.fecha_contratacion;
+  }
+
   dibujar_lineal () {
     let grafica_value: any [] = [];
     let meses: number = 0;
